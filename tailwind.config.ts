@@ -7,6 +7,11 @@ const config: Config = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    extend: {
+      backgroundImage: {
+        'landing-image': "url('/landing-image.webp')",
+      },
+    },
     colors: {
       transparent: "transparent",
       current: "currentColor",
@@ -14,6 +19,7 @@ const config: Config = {
       white: "#F5F5F5",
       gray: {
         500: "#CECECE",
+        700: "#3A393E",
       },
       red: {
         500: "#FF453A",

@@ -20,8 +20,11 @@ export const metadata: Metadata = {
 const RootLayout: FC<PropsWithChildren> = ({children}) => {
   return (
     <html lang="es">
-    <body className={`bg-black text-white ${openSans.className}`}>
+    <body className={`w-screen h-screen flex flex-col bg-black text-white ${openSans.className}`}>
     {children}
+    <footer className={"p-5 bg-gray-700 text-yellow-500 text-center"}>
+      <p>© 2022 Digital Money House</p>
+    </footer>
     </body>
     </html>
   );
