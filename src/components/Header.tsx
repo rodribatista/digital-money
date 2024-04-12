@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export const Header: FC<PropsWithChildren> = ({children}) => {
   return (
-    <header className={"p-5 flex flex-row justify-between bg-transparent md:px-10 lg:px-40"}>
+    <header className={"p-5 flex flex-row justify-between bg-transparent md:px-20 xl:px-40"}>
       <Image
         src={"/logo-color.svg"}
         alt={"Logo Digital Money"}
