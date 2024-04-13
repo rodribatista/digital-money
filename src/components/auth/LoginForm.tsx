@@ -41,13 +41,13 @@ export const LoginForm = () => {
                 </p>
                 <Link href={"/login"}
                       className={"pb-1 border-b-2 border-yellow-500 font-semibold text-center"}>
-                  ingresar email
+                  ingresar correo
                 </Link>
               </div>
             </>
           ) : (
             <>
-              <h1 className={"text-2xl text-center"}>Ingresá tu email</h1>
+              <h1 className={"text-2xl text-center"}>Ingresá tu correo</h1>
               <LoginEmailForm/>
               <div className={"flex flex-row gap-2 justify-center"}>
                 <p className={"text-base"}>
