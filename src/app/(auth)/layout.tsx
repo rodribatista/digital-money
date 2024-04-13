@@ -17,7 +17,7 @@ const AuthLayout: FC<PropsWithChildren> = ({children}) => {
           />
         </Link>
       </header>
-      <main className={"w-full h-full p-5 flex flex-col grow justify-center items-center md:px-20 xl:px-40"}>
+      <main className={"w-full h-full p-5 flex flex-col grow gap-10 justify-center items-center md:px-20 xl:px-40"}>
         {children}
       </main>
     </>
