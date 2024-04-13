@@ -21,17 +21,14 @@ export type SignupData = {
 }
 
 const schema = yup.object({
-  dni: yup.number().required(),
-  email: yup.string()
-    .email().required(),
-  firstname: yup.string().required(),
-  lastname: yup.string().required(),
-  password: yup.string()
-    .min(6).max(20)
-    .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{6,20}$/)
-    .required(),
-  password_confirmation: yup.string().required(),
-  phone: yup.string().required(),
+  dni: yup.number().positive().required(),
+  email: yup.string().trim().lowercase().email().required(),
+  firstname: yup.string().trim().required(),
+  lastname: yup.string().trim().required(),
+  password: yup.string().trim().min(6).max(20)
+    .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{6,20}$/).required(),
+  password_confirmation: yup.string().trim().oneOf([yup.ref('password')]).required(),
+  phone: yup.string().trim().required(),
 }).required()
 
 export const SignupForm = () => {
