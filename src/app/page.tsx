@@ -1,7 +1,6 @@
 import Link from "next/link";
 
 import {Header} from "@/components/Header";
-import React from "react";
 
 const LandingPage = () => {
   return (

@@ -58,7 +58,7 @@ export const SignupForm = () => {
           <span className={"self-center text-sm text-center md:w-3/4"}>Usá entre 6 y 20 carácteres. Debe contener al menos al menos una mayúscula y un número.</span>
           <FormInput type={"password"} name={"password_confirmation"} placeholder={"********"}/>
           <FormInput type={"tel"} name={"phone"} placeholder={"Teléfono*"}/>
-          <FormButton onSubmit={onSubmit}>Ingresar</FormButton>
+          <FormButton onSubmit={onSubmit}>Crear cuenta</FormButton>
           <div className={"flex flex-row gap-2 justify-center"}>
             <p className={"text-base"}>
               ¿Ya tienes cuenta?

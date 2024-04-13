@@ -9,7 +9,6 @@ export const Header: FC<PropsWithChildren> = ({children}) => {
         alt={"Logo Digital Money"}
         width={80}
         height={0}
-        priority
       />
       {children}
     </header>
