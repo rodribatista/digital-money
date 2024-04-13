@@ -46,16 +46,16 @@ export const LoginEmailForm = () => {
         <button className={"py-3 bg-yellow-500 rounded-lg text-black text-center font-semibold"}
                 type="submit">Continuar
         </button>
-        <div className={"flex flex-row gap-2 justify-center"}>
-          <p className={"text-base"}>
-            ¿No tienes cuenta?
-          </p>
-          <Link href={"/signup"}
-                className={"pb-1 border-b-2 border-yellow-500 font-semibold text-center"}>
-            Crear cuenta
-          </Link>
-        </div>
       </form>
+      <div className={"flex flex-row gap-2 justify-center"}>
+        <p className={"text-base"}>
+          ¿No tienes cuenta?
+        </p>
+        <Link href={"/signup"}
+              className={"pb-1 border-b-2 border-yellow-500 font-semibold text-center"}>
+          Crear cuenta
+        </Link>
+      </div>
     </>
   )
 }

@@ -3,6 +3,7 @@ import {useEffect} from "react";
 import {useForm} from "react-hook-form";
 import * as yup from "yup";
 import {yupResolver} from "@hookform/resolvers/yup";
+import Link from "next/link";
 
 type LoginPassParams = {
   email: string,
@@ -49,8 +50,10 @@ export const LoginPassForm = ({email}: LoginPassParams) => {
                {...register("password")} placeholder="**********"/>
         {errors?.password && <span className={"text-sm text-red-500 text-center"}>{errors.password.message}</span>}
         <button className={"py-3 bg-yellow-500 rounded-lg text-black text-center font-semibold"}
-                type="submit">Ingresar</button>
+                type="submit">Ingresar
+        </button>
       </form>
+      <div className={"flex flex-row gap-2 justify-center text-base text-black"}>-</div>
     </>
   )
 }
