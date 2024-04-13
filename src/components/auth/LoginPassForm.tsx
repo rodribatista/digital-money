@@ -1,9 +1,14 @@
 "use client";
 import {useEffect} from "react";
-import {useForm} from "react-hook-form";
+import Link from "next/link";
+
+import {FormProvider, useForm} from "react-hook-form";
 import * as yup from "yup";
 import {yupResolver} from "@hookform/resolvers/yup";
-import Link from "next/link";
+
+import {FormButton} from "@/components/form/FormButton";
+import FormInput from "@/components/form/FormInput";
+
 
 type LoginPassParams = {
   email: string,
@@ -21,15 +26,16 @@ const schema = yup.object({
 
 export const LoginPassForm = ({email}: LoginPassParams) => {
 
+  const loginPassForm = useForm<LoginData>({
+    resolver: yupResolver(schema),
+  })
+
   const {
-    register,
     handleSubmit,
     setFocus,
     formState: { errors },
     setValue,
-  } = useForm<LoginData>({
-    resolver: yupResolver(schema),
-  })
+  } = loginPassForm
 
   useEffect(() => {
     setValue("email", email)
@@ -43,17 +49,22 @@ export const LoginPassForm = ({email}: LoginPassParams) => {
   return (
     <>
       <h1 className={"text-2xl text-center"}>Ingresa tu contraseña</h1>
-      <form onSubmit={handleSubmit(onSubmit)}
-            className={"w-full flex flex-col gap-5 md:w-2/3 xl:w-1/2"}>
-        <input type={"password"}
-               className={"p-3 border border-gray-300 rounded-md text-black text-base focus:outline-yellow-500 outline-2"}
-               {...register("password")} placeholder="**********"/>
-        {errors?.password && <span className={"text-sm text-red-500 text-center"}>{errors.password.message}</span>}
-        <button className={"py-3 bg-yellow-500 rounded-lg text-black text-center font-semibold"}
-                type="submit">Ingresar
-        </button>
-      </form>
-      <div className={"flex flex-row gap-2 justify-center text-base text-black"}>-</div>
+      <FormProvider {...loginPassForm}>
+        <form onSubmit={handleSubmit(onSubmit)}
+              className={"w-full flex flex-col gap-5 md:w-2/3 xl:w-1/2"}>
+          <FormInput type={"password"} name={"password"} placeholder={"********"}/>
+          <FormButton>Ingresar</FormButton>
+        </form>
+      </FormProvider>
+      <div className={"flex flex-row gap-1.5 justify-center"}>
+        <p className={"text-base"}>
+          Volver a
+        </p>
+        <Link href={"/login"}
+              className={"pb-1 border-b-2 border-yellow-500 font-semibold text-center"}>
+          ingresar email
+        </Link>
+      </div>
     </>
   )
 }
