@@ -1,13 +1,13 @@
 "use client"
 import React from 'react';
 import Image from "next/image";
-import Navbar from "@/components/Navbar";
+import {Navbar} from "@/components/Navbar";
 
 type NavbarMobileProps = {
   setShowMobileMenu: (show: boolean) => void;
 }
 
-const NavbarMobile = ({setShowMobileMenu}: NavbarMobileProps) => {
+export const NavbarMobile = ({setShowMobileMenu}: NavbarMobileProps) => {
 
   const handleShowMenu = () => {
     setShowMobileMenu(false);
@@ -26,5 +26,3 @@ const NavbarMobile = ({setShowMobileMenu}: NavbarMobileProps) => {
   );
 
 };
-
-export default NavbarMobile;

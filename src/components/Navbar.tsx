@@ -11,7 +11,7 @@ const pathsInitial = {
   payment: false,
   cards: false
 };
-const Navbar = () => {
+export const Navbar = () => {
 
   const pathname = usePathname();
 
@@ -34,5 +34,3 @@ const Navbar = () => {
     </nav>
   );
 };
-
-export default Navbar;

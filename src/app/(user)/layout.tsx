@@ -2,7 +2,7 @@ import {FC, PropsWithChildren} from "react";
 
 import {Header} from "@/components/Header";
 import {HeaderInfo} from "@/components/HeaderInfo";
-import Navbar from "@/components/Navbar";
+import {Navbar} from "@/components/Navbar";
 
 const UserLayout: FC<PropsWithChildren> = ({children}) => {
   return (
