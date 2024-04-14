@@ -14,13 +14,12 @@ const UserLayout: FC<PropsWithChildren> = ({children}) => {
         <aside className={"hidden w-1/4 md:block"}>
           <Navbar/>
         </aside>
-        <main
-          className={"w-full p-5 flex flex-col grow justify-center items-center"}>
-          {children}
-        </main>
+          <main className={"w-full p-5 flex flex-col grow gap-5 items-center bg-gray-500 md:px-10 xl:px-20"}>
+            {children}
+          </main>
       </div>
     </>
-  );
+);
 }
 
 export default UserLayout;
