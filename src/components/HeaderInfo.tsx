@@ -1,12 +1,19 @@
 "use client";
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Image from "next/image";
+import {usePathname} from "next/navigation";
 
 import {NavbarMobile} from "@/components/NavbarMobile";
 
 export const HeaderInfo = () => {
 
+  const pathname = usePathname();
+
   const [showMobileMenu, setShowMobileMenu] = useState(false);
+
+  useEffect(() => {
+    setShowMobileMenu(false);
+  }, [pathname]);
 
   const handleShowMenu = () => {
     setShowMobileMenu(true);
@@ -24,4 +31,5 @@ export const HeaderInfo = () => {
       {showMobileMenu && <NavbarMobile setShowMobileMenu={setShowMobileMenu}/>}
     </div>
   );
+
 };

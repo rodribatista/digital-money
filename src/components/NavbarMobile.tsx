@@ -1,11 +1,11 @@
-"use client"
-import React from 'react';
+import React from "react";
 import Image from "next/image";
+
 import {Navbar} from "@/components/Navbar";
 
 type NavbarMobileProps = {
-  setShowMobileMenu: (show: boolean) => void;
-}
+  setShowMobileMenu: React.Dispatch<React.SetStateAction<boolean>>
+};
 
 export const NavbarMobile = ({setShowMobileMenu}: NavbarMobileProps) => {
 

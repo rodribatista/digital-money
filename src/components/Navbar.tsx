@@ -1,5 +1,5 @@
 "use client";
-import {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Link from "next/link";
 import {usePathname} from "next/navigation";
 
@@ -11,6 +11,7 @@ const pathsInitial = {
   payment: false,
   cards: false
 };
+
 export const Navbar = () => {
 
   const pathname = usePathname();
@@ -33,4 +34,5 @@ export const Navbar = () => {
       <Link href={"#"}>Cerrar sesión</Link>
     </nav>
   );
+
 };
