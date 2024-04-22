@@ -14,7 +14,7 @@ export const NavbarMobile = ({setShowMobileMenu}: NavbarMobileProps) => {
   }
 
   return (
-    <div className={"absolute top-0 left-0 w-screen h-screen"}>
+    <div className={"absolute top-0 left-0 w-screen h-full overflow-scroll z-50"}>
       <div className={"w-full h-1/4 p-10 flex flex-col justify-between bg-black"}>
         <button className={"self-end"} onClick={handleShowMenu}>
           <Image src={"/icon-close.svg"} alt={"Icono para cerrar menú desplegable"} width={30} height={30}/>
