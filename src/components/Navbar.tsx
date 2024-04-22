@@ -1,7 +1,7 @@
 "use client";
 import React, {useEffect, useState} from 'react';
+import {usePathname, useRouter} from "next/navigation";
 import Link from "next/link";
-import {usePathname} from "next/navigation";
 
 const pathsInitial = {
   home: false,
@@ -15,6 +15,7 @@ const pathsInitial = {
 export const Navbar = () => {
 
   const pathname = usePathname();
+  const router = useRouter();
 
   const [actualPath, setActualPath] = useState(pathsInitial);
 
@@ -22,6 +23,13 @@ export const Navbar = () => {
     const actualPath = pathname.split("/")[2];
     setActualPath({...pathsInitial, [actualPath]: true})
   }, [pathname]);
+
+  const handleLogout = () => {
+    const ok = confirm("¿Cerrar sesión?")
+    if (ok) {
+      router.replace("/")
+    }
+  }
   
   return (
     <nav className={"w-full h-full p-10 flex flex-col gap-5 bg-yellow-500 text-black"}>
@@ -31,7 +39,7 @@ export const Navbar = () => {
       <Link href={"/app/deposit"} className={`${actualPath["deposit"] && "font-bold"}`}>Cargar dinero</Link>
       <Link href={"/app/payment"} className={`${actualPath["payment"] && "font-bold"}`}>Pagar servicios</Link>
       <Link href={"/app/cards"} className={`${actualPath["cards"] && "font-bold"}`}>Tarjetas</Link>
-      <Link href={"#"}>Cerrar sesión</Link>
+      <button className={"self-start opacity-25"} onClick={handleLogout}>Cerrar sesión</button>
     </nav>
   );
 

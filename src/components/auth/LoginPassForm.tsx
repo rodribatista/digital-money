@@ -1,5 +1,6 @@
 "use client";
 import {useEffect} from "react";
+import {useRouter} from "next/navigation";
 import {useFormContext} from "react-hook-form";
 
 import {FormButton} from "@/components/form/FormButton";
@@ -12,6 +13,8 @@ type LoginPassParams = {
 
 export const LoginPassForm = ({email}: LoginPassParams) => {
 
+  const router = useRouter()
+
   const {
     setValue,
     setFocus,
@@ -23,7 +26,10 @@ export const LoginPassForm = ({email}: LoginPassParams) => {
   }, [])
 
   const onSubmit = (data: LoginData) => {
-    alert(JSON.stringify(data))
+    const ok = confirm(JSON.stringify(data))
+    if (ok) {
+      router.replace("/app/home")
+    }
   }
 
   return (
