@@ -1,5 +1,5 @@
 import {AppLinks} from "@/components/app/AppLinks";
-import {AccountsInfo} from "@/components/app/profile/AccountsInfo";
+import {AccountsInfo} from "@/components/app/deposit/AccountsInfo";
 import {ProfileInfo} from "@/components/app/profile/ProfileInfo";
 
 const ProfilePage = () => {

@@ -1,4 +1,4 @@
-import {CopyToClipboard} from "@/components/app/profile/CopyToClipboard";
+import {CopyToClipboard} from "@/components/app/deposit/CopyToClipboard";
 
 export const AccountsInfo = () => {
   return (
