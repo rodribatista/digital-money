@@ -1,6 +1,8 @@
 import {FC, PropsWithChildren} from "react";
 import type {Metadata} from "next";
 
+import {StoreProvider} from "@/store/StoreProvider";
+
 import {Open_Sans} from "next/font/google";
 import "./globals.css";
 
@@ -21,13 +23,15 @@ const RootLayout: FC<PropsWithChildren> = ({children}) => {
   return (
     <html lang="es">
     <body className={`w-screen min-h-screen flex flex-col bg-black text-white ${openSans.className}`}>
-    {children}
-    <footer className={"p-5 bg-gray-700 text-yellow-500 text-center"}>
-      <p>© 2022 Digital Money House</p>
-    </footer>
+      <StoreProvider>
+        {children}
+      </StoreProvider>
+      <footer className={"p-5 bg-gray-700 text-yellow-500 text-center"}>
+        <p>© 2022 Digital Money House</p>
+      </footer>
     </body>
     </html>
-  );
+);
 }
 
 export default RootLayout;
