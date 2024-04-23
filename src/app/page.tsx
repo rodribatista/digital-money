@@ -5,7 +5,7 @@ import {Header} from "@/components/Header";
 const LandingPage = () => {
   return (
     <>
-      <Header>
+      <Header homeUrl={"/"}>
         <div className={"flex flex-row gap-2"}>
           <Link href={"/login"}
                 className={"py-2 px-3 border-2 border-yellow-500 rounded-lg font-semibold text-center"}>

@@ -1,15 +1,14 @@
-import {FC, PropsWithChildren} from 'react';
-import Image from "next/image";
+import {HeaderLogo} from "@/components/HeaderLogo";
 
-export const Header: FC<PropsWithChildren> = ({children}) => {
+type HeaderProps = {
+  homeUrl: string,
+  children: React.ReactNode,
+};
+
+export const Header = ({homeUrl, children, }: HeaderProps) => {
   return (
     <header className={"p-5 flex flex-row justify-between bg-transparent md:px-20 xl:px-40"}>
-      <Image
-        src={"/logo-color.svg"}
-        alt={"Logo Digital Money"}
-        width={80}
-        height={0}
-      />
+      <HeaderLogo onClickUrl={homeUrl}/>
       {children}
     </header>
   );

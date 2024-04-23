@@ -7,7 +7,7 @@ import {Navbar} from "@/components/Navbar";
 const UserLayout: FC<PropsWithChildren> = ({children}) => {
   return (
     <>
-      <Header>
+      <Header homeUrl={"/app/home"}>
         <HeaderInfo/>
       </Header>
       <div className={"w-full h-full flex flex-row grow"}>
