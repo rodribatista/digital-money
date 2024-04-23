@@ -1,10 +1,12 @@
 import React from 'react';
+import {ServiceList} from "@/components/app/payment/ServiceList";
 
 const PaymentPage = () => {
   return (
-    <div>
-      Payment Page
-    </div>
+    <>
+      <h1 className={"self-start text-black font-semibold"}>Pagar servicios</h1>
+      <ServiceList/>
+    </>
   );
 };
 

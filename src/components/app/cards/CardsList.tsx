@@ -41,7 +41,7 @@ const cards: Card[] = [
 export const CardsList = () => {
   return (
     <section className={"w-full p-5 flex flex-col gap-5 rounded-md bg-white text-black shadow-md md:p-10 xl:p-15"}>
-      <h2 className={"pb-2 border-b border-gray-500 text-xl font-semibold"}>Tus tarjetas</h2>
+      <h2 className={"pb-5 border-b border-gray-500 text-xl font-semibold"}>Tus tarjetas</h2>
       <ul className={"flex flex-col gap-5"}>
         {cards.map((card) => <CardItem key={card.id} {...card}/>)}
       </ul>
