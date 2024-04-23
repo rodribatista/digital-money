@@ -56,7 +56,7 @@ export const NewCard = () => {
           <FormInput type={"text"} name={"name"} placeholder={"Nombre y apellido"} onFocus={() => setFocus(FocusType.NAME)}/>
           <FormInput type={"number"} name={"expiry"} placeholder={"Fecha de expiración"} onFocus={() => setFocus(FocusType.DATE)}/>
           <FormInput type={"number"} name={"cvc"} placeholder={"Código de seguridad"} onFocus={() => setFocus(FocusType.CVC)}/>
-          <FormButton onSubmit={onSubmit}>Crear cuenta</FormButton>
+          <FormButton onSubmit={onSubmit}>Agregar tarjeta</FormButton>
         </form>
       </FormProvider>
     </section>

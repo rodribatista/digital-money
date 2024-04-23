@@ -1,9 +1,9 @@
-import React from 'react';
-
-import {Activity, ActivityType} from "@/components/app/home/LastActivity";
 import Image from "next/image";
 
-const ActivityItem = ({type, origin, destination, amount, dated}: Activity) => {
+import {Activity} from "@/components/app/activity/ActivityList";
+import {ActivityType} from "@/types/ActivityType";
+
+export const ActivityItem = ({type, origin, destination, amount, dated}: Activity) => {
 
   const renderActivity = {
     "DEPOSIT": "Ingresaste dinero",
@@ -23,6 +23,5 @@ const ActivityItem = ({type, origin, destination, amount, dated}: Activity) => {
       </div>
     </li>
   );
-};
 
-export default ActivityItem;
+};

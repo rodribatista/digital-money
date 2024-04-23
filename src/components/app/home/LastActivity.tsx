@@ -1,23 +1,9 @@
 import Link from "next/link";
-
-import ActivityItem from "@/components/app/home/ActivityItem";
 import Image from "next/image";
-import React from "react";
 
-export enum ActivityType {
-  DEPOSIT = 'DEPOSIT',
-  TRANSFER_IN = 'TRANSFER_IN',
-  TRANSFER_OUT = 'TRANSFER_OUT',
-}
-
-export type Activity = {
-  id: number,
-  type: ActivityType,
-  origin: string | null,
-  destination: string | null,
-  amount: number,
-  dated: string,
-};
+import {Activity} from "@/components/app/activity/ActivityList";
+import {ActivityItem} from "@/components/app/activity/ActivityItem";
+import {ActivityType} from "@/types/ActivityType";
 
 const lastActivity: Activity[] = [
   {
@@ -57,7 +43,7 @@ const lastActivity: Activity[] = [
 export const LastActivity = () => {
   return (
     <section className={"w-full p-5 flex flex-col gap-5 rounded-md bg-white text-black shadow-md md:p-10 xl:p-15"}>
-      <h2 className={"pb-2 border-b border-gray-500 text-xl font-semibold"}>Tu actividad</h2>
+      <h2 className={"pb-5 border-b border-gray-500 text-xl font-semibold"}>Tu actividad</h2>
       <ul className={"flex flex-col gap-5"}>
         {lastActivity.map((activity) => <ActivityItem key={activity.id} {...activity}/>)}
       </ul>

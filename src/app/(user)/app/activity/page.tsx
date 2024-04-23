@@ -1,10 +1,11 @@
-import React from 'react';
+import {ActivityList} from "@/components/app/activity/ActivityList";
 
 const ActivityPage = () => {
   return (
-    <div>
-      Activity Page
-    </div>
+    <>
+      <h1 className={"self-start text-black font-semibold"}>Actividad</h1>
+      <ActivityList/>
+    </>
   );
 };
 
