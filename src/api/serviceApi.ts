@@ -9,7 +9,7 @@ const serviceApi = baseApi.injectEndpoints({
       }),
     }),
     getServicesByName: builder.query({
-      query: (query: string) => ({
+      query: (query?: string) => ({
         url: `/service/search/${query}`,
         method: 'GET',
       }),
