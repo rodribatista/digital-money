@@ -3,13 +3,13 @@ import {useEffect} from "react";
 import Link from "next/link";
 import {useRouter} from "next/navigation";
 import {FormProvider, useForm} from "react-hook-form";
-import {appSwal} from "@/lib/sweet";
+import {authSwal} from "@/lib/sweet";
 
 import * as yup from "yup";
 import {yupResolver} from "@hookform/resolvers/yup";
 
 import {authSignup} from "@/api/authApi";
-import {SignupData, SignupResponse} from "@/types/AuthType";
+import {SignupData} from "@/types/AuthType";
 
 import {FormInput} from "@/components/form/FormInput";
 import {FormButton} from "@/components/form/FormButton";
@@ -35,32 +35,24 @@ export const SignupForm = () => {
 
   useEffect(() => {
     signupForm.setFocus("firstname")
-  }, [])
+  }, []);
 
   const onSubmit = (data: SignupData) => {
-    appSwal.fire({
+    authSwal.fire({
       title: "Registrando usuario...",
       showConfirmButton: false,
       allowOutsideClick: false,
       willOpen() {
-        appSwal.showLoading();
+        authSwal.showLoading();
       },
     });
     authSignup(data)
       .then((email) => {
-        appSwal.fire({
-          icon: "success",
-          title: "Registro éxitoso",
-          text: "Serás redirigido en un momento...",
-          showConfirmButton: false,
-          allowOutsideClick: false,
-          timer: 1500
-        }).then(() => {
-          router.replace(`/login?email=${email}`)
-        });
+        authSwal.close();
+        router.replace(`/signup/successfully?email=${email}`)
       })
       .catch((error) => {
-        appSwal.fire({
+        authSwal.fire({
           icon: "error",
           title: "Ooops... algo salió mal",
           text: error.message,

@@ -1,7 +1,8 @@
-import Link from "next/link";
 import Image from "next/image";
 
-const LoginPage = () => {
+import {SignupSuccessButton} from "@/components/auth/SignupSuccessfuly";
+
+const SignupSuccessPage = () => {
   return (
     <div className={"w-3/4 flex flex-col gap-10 items-center md:w-1/2 xl:w-1/4"}>
       <Image
@@ -14,12 +15,9 @@ const LoginPage = () => {
       <p className={"text-base text-center"}>
         Hemos enviado un correo de confirmación para validar tu email, por favor revisalo para iniciar sesión.
       </p>
-      <Link href={"/login"}
-            className={`w-full py-3 bg-yellow-500 rounded-lg text-black text-center font-semibold`}>
-        Continuar
-      </Link>
+      <SignupSuccessButton/>
     </div>
   );
 }
 
-export default LoginPage;
+export default SignupSuccessPage;

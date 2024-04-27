@@ -1,6 +1,6 @@
 import Swal from "sweetalert2";
 
-export const appSwal = Swal.mixin({
+export const authSwal = Swal.mixin({
   customClass: {
     popup: "p-10 bg-black",
     title: "text-white font-2xl font-bold",
