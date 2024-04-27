@@ -54,7 +54,7 @@ export const SignupForm = () => {
           text: "Serás redirigido en un momento...",
           showConfirmButton: false,
           allowOutsideClick: false,
-          timer: 1000
+          timer: 1500
         }).then(() => {
           router.replace(`/login?email=${email}`)
         });
