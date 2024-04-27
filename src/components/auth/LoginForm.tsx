@@ -9,10 +9,7 @@ import {yupResolver} from "@hookform/resolvers/yup";
 import {LoginPassForm} from "@/components/auth/LoginPassForm";
 import {LoginEmailForm} from "@/components/auth/LoginEmailForm";
 
-export type LoginData = {
-  email: string,
-  password: string,
-}
+import {LoginCredentials} from "@/types/AuthType";
 
 const schema = yup.object({
   email: yup.string().required(),
@@ -23,7 +20,7 @@ export const LoginForm = () => {
 
   const params = useSearchParams()
 
-  const loginForm = useForm<LoginData>({
+  const loginForm = useForm<LoginCredentials>({
     resolver: yupResolver(schema),
   })
 

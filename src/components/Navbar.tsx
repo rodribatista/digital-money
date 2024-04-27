@@ -2,8 +2,9 @@
 import React, {useEffect, useState} from 'react';
 import {usePathname, useRouter} from "next/navigation";
 import Link from "next/link";
+
 import {useAppDispatch} from "@/lib/hooks";
-import {setAuthState} from "@/store/authSlice";
+import {userLoggedOut} from "@/store/authSlice";
 
 const pathsInitial = {
   home: false,
@@ -31,7 +32,7 @@ export const Navbar = () => {
   const handleLogout = () => {
     const ok = confirm("¿Cerrar sesión?")
     if (ok) {
-      dispatch(setAuthState(false))
+      dispatch(userLoggedOut())
       router.replace("/")
     }
   }

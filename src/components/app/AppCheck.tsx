@@ -10,18 +10,18 @@ export const AppCheck: FC<PropsWithChildren> = ({children}) => {
   const router = useRouter();
 
   const [isLoaded, setIsLoaded] = useState(false);
-  const authState = useAppSelector((state) => state.auth.authState);
+  const isLogged = useAppSelector((state) => state.auth.isLogged);
 
   useEffect(() => {
-    if (!authState) {
+    if (!isLogged) {
       router.replace("/");
       return;
     }
     setTimeout(() => {
       setIsLoaded(true)
     }, 1500);
-  }, [authState]);
+  }, [isLogged]);
 
-  return authState && isLoaded ? (<>{children}</>) : <AppLoader/>;
+  return isLogged && isLoaded ? (<>{children}</>) : <AppLoader/>;
 
 };

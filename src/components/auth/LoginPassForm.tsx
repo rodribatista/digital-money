@@ -4,11 +4,12 @@ import {useRouter} from "next/navigation";
 import {useFormContext} from "react-hook-form";
 
 import {useAppDispatch} from "@/lib/hooks";
-import {setAuthState} from "@/store/authSlice";
+import {authLogin} from "@/api/authApi";
+
+import {LoginCredentials} from "@/types/AuthType";
 
 import {FormButton} from "@/components/form/FormButton";
 import {FormInput} from "@/components/form/FormInput";
-import {LoginData} from "@/components/auth/LoginForm";
 
 type LoginPassParams = {
   email: string,
@@ -29,12 +30,12 @@ export const LoginPassForm = ({email}: LoginPassParams) => {
     setFocus("password")
   }, [])
 
-  const onSubmit = (data: LoginData) => {
-    const ok = confirm(JSON.stringify(data))
-    if (ok) {
-      dispatch(setAuthState(true))
-      router.replace("/app/home")
-    }
+  const onSubmit = (data: LoginCredentials) => {
+    dispatch(authLogin(data))
+      .then(() => {
+        router.replace("/app/home")
+      })
+      .catch((error) => alert(error.message))
   }
 
   return (
