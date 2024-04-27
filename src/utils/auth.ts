@@ -15,7 +15,7 @@ export const getAccessToken = (): string => {
 }
 
 export const setAuthentication = (access_token: string) => {
-  Cookies.set('TOKEN', access_token, { secure: true })
+  Cookies.set('TOKEN', access_token, { secure: false })
 }
 
 export const removeAuthentication = () => {
