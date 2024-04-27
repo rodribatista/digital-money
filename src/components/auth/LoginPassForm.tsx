@@ -13,17 +13,17 @@ import {FormInput} from "@/components/form/FormInput";
 
 type LoginPassParams = {
   email: string,
-}
+};
 
 export const LoginPassForm = ({email}: LoginPassParams) => {
 
-  const router = useRouter()
+  const router = useRouter();
   const dispatch = useAppDispatch();
 
   const {
     setValue,
     setFocus,
-  } = useFormContext()
+  } = useFormContext();
 
   useEffect(() => {
     setValue("email", email)
@@ -33,10 +33,11 @@ export const LoginPassForm = ({email}: LoginPassParams) => {
   const onSubmit = (data: LoginCredentials) => {
     dispatch(authLogin(data))
       .then(() => {
+        alert("Inicio de sesión exitoso")
         router.replace("/app/home")
       })
       .catch((error) => alert(error.message))
-  }
+  };
 
   return (
     <>
@@ -45,4 +46,4 @@ export const LoginPassForm = ({email}: LoginPassParams) => {
     </>
   )
 
-}
+};

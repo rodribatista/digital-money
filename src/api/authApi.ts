@@ -1,7 +1,7 @@
 import {instance} from './baseApi';
 import {userLoggedIn} from "@/store/authSlice";
 
-import {LoginResponse, LoginCredentials, AuthLoginResponses} from "@/types/AuthType";
+import {LoginResponse, LoginCredentials, SignupData, AuthResponses, SignupResponse} from "@/types/AuthType";
 import {AppDispatch} from "@/lib/store";
 import {AxiosError} from "axios";
 
@@ -10,9 +10,10 @@ interface AuthResponseHandler {
 }
 
 const authResponseHandler: AuthResponseHandler = {
-  [AuthLoginResponses.BAD_CREDENTIALS]: "Las credenciales son inválidas. Por favor, inténtalo de nuevo.",
-  [AuthLoginResponses.USER_NOT_FOUND]: "Usuario no encontrado. Por favor, inténtalo de nuevo.",
-  [AuthLoginResponses.INTERNAL_ERROR]: "Ha ocurrido un error inesperado. Por favor, inténtalo de nuevo.",
+  [AuthResponses.BAD_CREDENTIALS]: "Las credenciales son inválidas. Por favor, inténtalo de nuevo.",
+  [AuthResponses.USER_NOT_FOUND]: "Usuario no encontrado. Por favor, inténtalo de nuevo.",
+  [AuthResponses.USER_ALREADY_EXISTS]: "El usuario ya existe. Puedes intentar iniciar sesión.",
+  [AuthResponses.INTERNAL_ERROR]: "Ha ocurrido un error inesperado. Por favor, inténtalo de nuevo.",
 };
 
 export const authLogin = (loginData: LoginCredentials) => {
@@ -26,4 +27,15 @@ export const authLogin = (loginData: LoginCredentials) => {
       throw new Error(authResponseHandler[errorCode])
     }
   };
+};
+
+export const authSignup = async (signupData: SignupData) => {
+  try {
+    const {data} = await instance.post("/users", signupData)
+    const response: SignupResponse = data
+    return response.email
+  } catch (error: AxiosError|any) {
+    const errorCode: number = error.response.status
+    throw new Error(authResponseHandler[errorCode])
+  }
 };

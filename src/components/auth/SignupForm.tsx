@@ -1,24 +1,17 @@
 "use client";
 import {useEffect} from "react";
 import Link from "next/link";
+import {useRouter} from "next/navigation";
 import {FormProvider, useForm} from "react-hook-form";
 
 import * as yup from "yup";
 import {yupResolver} from "@hookform/resolvers/yup";
 
+import {authSignup} from "@/api/authApi";
+import {SignupData, SignupResponse} from "@/types/AuthType";
+
 import {FormInput} from "@/components/form/FormInput";
 import {FormButton} from "@/components/form/FormButton";
-import {LoginData} from "@/components/auth/LoginForm";
-
-export type SignupData = {
-  dni: number,
-  email: string,
-  firstname: string,
-  lastname: string,
-  password: string,
-  password_confirmation: string,
-  phone: string,
-}
 
 const schema = yup.object({
   dni: yup.number().positive().required(),
@@ -33,6 +26,8 @@ const schema = yup.object({
 
 export const SignupForm = () => {
 
+  const router = useRouter();
+
   const signupForm = useForm<SignupData>({
     resolver: yupResolver(schema),
   })
@@ -41,9 +36,14 @@ export const SignupForm = () => {
     signupForm.setFocus("firstname")
   }, [])
 
-  const onSubmit = (data: LoginData) => {
-    alert(JSON.stringify(data))
-  }
+  const onSubmit = (data: SignupData) => {
+    authSignup(data)
+      .then((email) => {
+        alert("Usuario creado exitosamente")
+        router.replace(`/login?email=${email}`)
+      })
+      .catch((error) => alert(error.message))
+  };
 
   return (
     <>
@@ -73,4 +73,4 @@ export const SignupForm = () => {
     </>
   )
 
-}
+};
