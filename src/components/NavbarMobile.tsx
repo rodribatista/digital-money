@@ -1,5 +1,8 @@
+"use client";
 import React from "react";
 import Image from "next/image";
+
+import {useAppSelector} from "@/lib/hooks";
 
 import {Navbar} from "@/components/Navbar";
 
@@ -8,6 +11,8 @@ type NavbarMobileProps = {
 };
 
 export const NavbarMobile = ({setShowMobileMenu}: NavbarMobileProps) => {
+
+  const {accountInfo} = useAppSelector(state => state.auth);
 
   const handleShowMenu = () => {
     setShowMobileMenu(false);
@@ -19,7 +24,7 @@ export const NavbarMobile = ({setShowMobileMenu}: NavbarMobileProps) => {
         <button className={"self-end"} onClick={handleShowMenu}>
           <Image src={"/icon-close.svg"} alt={"Icono para cerrar menú desplegable"} width={30} height={30}/>
         </button>
-        <p className={"text-2xl text-yellow-500"}>Hola,<br/><span className={"font-bold"}>John Doe</span></p>
+        <p className={"text-2xl text-yellow-500"}>Hola,<br/><span className={"font-bold"}>{accountInfo.name}</span></p>
       </div>
       <Navbar/>
     </div>

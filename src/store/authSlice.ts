@@ -1,18 +1,25 @@
-import { createSlice } from "@reduxjs/toolkit";
+import {createSlice} from "@reduxjs/toolkit";
 
-import type { PayloadAction } from "@reduxjs/toolkit";
-import {UserInformation} from "@/types/AuthType";
+import type {PayloadAction} from "@reduxjs/toolkit";
+import {AccountCtxInfo} from "@/types/UserType";
 
 import {removeAuthentication, setAuthentication} from "@/utils/auth";
 
 export interface IAuthState {
   accessToken: string | null;
-  userInfo: UserInformation | null;
+  accountInfo: AccountCtxInfo;
 }
 
 const initialState: IAuthState = {
   accessToken: null,
-  userInfo: null,
+  accountInfo: {
+    account_id: 0,
+    user_id: 0,
+    name: "",
+    cvu: "",
+    alias: "",
+    available_amount: 0,
+  },
 };
 
 export const authSlice = createSlice({
@@ -29,8 +36,8 @@ export const authSlice = createSlice({
     userSetToken: (state, action: PayloadAction<string>) => {
       state.accessToken = action.payload;
     },
-    userSetInfo: (state, action: PayloadAction<UserInformation>) => {
-      state.userInfo = action.payload;
+    userSetAccountInfo: (state, action: PayloadAction<AccountCtxInfo>) => {
+      state.accountInfo = action.payload;
     },
   }
 });
@@ -40,5 +47,5 @@ export const {
   userLoggedIn,
   userLoggedOut,
   userSetToken,
-  userSetInfo,
+  userSetAccountInfo,
 } = authSlice.actions;

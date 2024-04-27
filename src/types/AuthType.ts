@@ -13,14 +13,6 @@ export type SignupResponse = {
   email: string,
 };
 
-export type UserInformation = {
-  id: number,
-  user_id: number,
-  cvu: string,
-  alias: string,
-  available_amount: number,
-};
-
 export type LoginCredentials = {
   email: string,
   password: string,

@@ -1,6 +1,11 @@
+"use client";
 import Link from "next/link";
+import {useAppSelector} from "@/lib/hooks";
 
 export const MoneyInfo = () => {
+
+  const {accountInfo} = useAppSelector(state => state.auth);
+
   return (
     <section className={"w-full p-5 flex flex-col gap-5 rounded-md bg-black shadow-md md:p-10 xl:p-15"}>
       <div className={"flex flex-row gap-5 self-end"}>
@@ -11,7 +16,7 @@ export const MoneyInfo = () => {
         <h2 className={"text-xl"}>Dinero disponible</h2>
         <span
           className={"w-fit p-5 rounded-full border-2 border-yellow-500 text-4xl font-semibold"}>
-          $ 6.890.534,17
+          $ {accountInfo.available_amount},00
         </span>
       </div>
     </section>
