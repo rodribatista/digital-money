@@ -3,6 +3,7 @@ import {useEffect} from "react";
 import Link from "next/link";
 import {useRouter} from "next/navigation";
 import {FormProvider, useForm} from "react-hook-form";
+import {appSwal} from "@/lib/sweet";
 
 import * as yup from "yup";
 import {yupResolver} from "@hookform/resolvers/yup";
@@ -37,12 +38,35 @@ export const SignupForm = () => {
   }, [])
 
   const onSubmit = (data: SignupData) => {
+    appSwal.fire({
+      title: "Registrando usuario...",
+      showConfirmButton: false,
+      allowOutsideClick: false,
+      willOpen() {
+        appSwal.showLoading();
+      },
+    });
     authSignup(data)
       .then((email) => {
-        alert("Usuario creado exitosamente")
-        router.replace(`/login?email=${email}`)
+        appSwal.fire({
+          icon: "success",
+          title: "Registro éxitoso",
+          text: "Serás redirigido en un momento...",
+          showConfirmButton: false,
+          allowOutsideClick: false,
+          timer: 1000
+        }).then(() => {
+          router.replace(`/login?email=${email}`)
+        });
       })
-      .catch((error) => alert(error.message))
+      .catch((error) => {
+        appSwal.fire({
+          icon: "error",
+          title: "Ooops... algo salió mal",
+          text: error.message,
+          showConfirmButton: true,
+        });
+      })
   };
 
   return (

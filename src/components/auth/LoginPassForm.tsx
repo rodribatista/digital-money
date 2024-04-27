@@ -2,6 +2,7 @@
 import {useEffect} from "react";
 import {useRouter} from "next/navigation";
 import {useFormContext} from "react-hook-form";
+import {appSwal} from "@/lib/sweet";
 
 import {useAppDispatch} from "@/lib/hooks";
 import {authLogin} from "@/api/authApi";
@@ -31,12 +32,35 @@ export const LoginPassForm = ({email}: LoginPassParams) => {
   }, [])
 
   const onSubmit = (data: LoginCredentials) => {
+    appSwal.fire({
+      title: "Iniciando sesión...",
+      showConfirmButton: false,
+      allowOutsideClick: false,
+      willOpen() {
+        appSwal.showLoading();
+      },
+    });
     dispatch(authLogin(data))
       .then(() => {
-        alert("Inicio de sesión exitoso")
-        router.replace("/app/home")
+        appSwal.fire({
+          icon: "success",
+          title: "¡Bienvenido!",
+          text: "Serás redirigido en un momento...",
+          showConfirmButton: false,
+          allowOutsideClick: false,
+          timer: 1000
+        }).then(() => {
+          router.replace("/app/home");
+        });
       })
-      .catch((error) => alert(error.message))
+      .catch((error) => {
+        appSwal.fire({
+          icon: "error",
+          title: "Ooops... algo salió mal",
+          text: error.message,
+          showConfirmButton: true,
+        });
+      });
   };
 
   return (

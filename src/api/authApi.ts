@@ -1,7 +1,7 @@
 import {instance} from './baseApi';
 import {userLoggedIn} from "@/store/authSlice";
 
-import {LoginResponse, LoginCredentials, SignupData, AuthResponses, SignupResponse} from "@/types/AuthType";
+import {LoginCredentials, SignupData, AuthResponses, LoginResponse, SignupResponse} from "@/types/AuthType";
 import {AppDispatch} from "@/lib/store";
 import {AxiosError} from "axios";
 
