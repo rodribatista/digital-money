@@ -1,5 +1,16 @@
 export enum ActivityType {
-  DEPOSIT = "DEPOSIT",
-  TRANSFER_IN = "TRANSFER_IN",
-  TRANSFER_OUT = "TRANSFER_OUT",
+  DEPOSIT = "Deposit",
+  TRANSACTION = "Transaction",
+  TRANSFER = "Transfer",
 }
+
+export type Activity = {
+  id: number,
+  account_id: number,
+  type: ActivityType,
+  amount: number,
+  destination: string,
+  origin: string,
+  dated: string,
+  description: string,
+};

@@ -1,14 +1,13 @@
 import Image from "next/image";
 
-import {Activity} from "@/components/app/activity/ActivityList";
-import {ActivityType} from "@/types/ActivityType";
+import {Activity, ActivityType} from "@/types/ActivityType";
 
-export const ActivityItem = ({type, origin, destination, amount, dated}: Activity) => {
+export const ActivityItem = ({type, destination, amount, dated}: Activity) => {
 
   const renderActivity = {
-    "DEPOSIT": "Ingresaste dinero",
-    "TRANSFER_IN": `Recibiste de ${origin}`,
-    "TRANSFER_OUT": `Transferiste a ${destination}`,
+    [ActivityType.DEPOSIT]: "Ingresaste dinero",
+    [ActivityType.TRANSACTION]: "Transferiste dinero",
+    [ActivityType.TRANSFER]: `Transferiste a ${destination}`,
   }
 
   return (
@@ -18,7 +17,7 @@ export const ActivityItem = ({type, origin, destination, amount, dated}: Activit
         <h3>{renderActivity[type]}</h3>
       </div>
       <div className={"flex flex-col items-end"}>
-        <span className={"text-md"}>$ {type === ActivityType.TRANSFER_OUT && "- "}{amount.toString().replace(".",",")}</span>
+        <span className={"text-md"}>$ {amount},00</span>
         <span className={"text-sm opacity-50"}>{dated}</span>
       </div>
     </li>
