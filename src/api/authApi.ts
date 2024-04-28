@@ -1,19 +1,16 @@
 import {instance} from './baseApi';
 import {userLoggedIn} from "@/store/authSlice";
 
-import {LoginCredentials, SignupData, AuthResponses, LoginResponse, SignupResponse} from "@/types/AuthType";
+import {LoginCredentials, SignupData, LoginResponse, SignupResponse} from "@/types/AuthType";
+import {ApiResponseHandler, ApiStatusResponses} from "@/types/ApiType";
 import {AppDispatch} from "@/lib/store";
 import {AxiosError} from "axios";
 
-interface AuthResponseHandler {
-  [key: string]: string;
-}
-
-const authResponseHandler: AuthResponseHandler = {
-  [AuthResponses.BAD_CREDENTIALS]: "Las credenciales son inválidas. Por favor, inténtalo de nuevo.",
-  [AuthResponses.USER_NOT_FOUND]: "Usuario no encontrado. Por favor, inténtalo de nuevo.",
-  [AuthResponses.USER_ALREADY_EXISTS]: "El usuario ya existe. Puedes intentar iniciar sesión.",
-  [AuthResponses.INTERNAL_ERROR]: "Ha ocurrido un error inesperado. Por favor, inténtalo de nuevo.",
+const authResponseHandler: ApiResponseHandler = {
+  [ApiStatusResponses.UNAUTHORIZED]: "Las credenciales son inválidas. Por favor, inténtalo de nuevo.",
+  [ApiStatusResponses.NOT_FOUND]: "Usuario no encontrado. Por favor, inténtalo de nuevo.",
+  [ApiStatusResponses.CONFLICT]: "El usuario ya existe. Puedes intentar iniciar sesión.",
+  [ApiStatusResponses.INTERNAL_ERROR]: "Ha ocurrido un error inesperado. Por favor, inténtalo de nuevo.",
 };
 
 export const authLogin = (loginData: LoginCredentials) => {

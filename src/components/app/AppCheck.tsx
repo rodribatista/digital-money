@@ -22,12 +22,12 @@ export const AppCheck: FC<PropsWithChildren> = ({children}) => {
     dispatch(userSetToken(access_token))
     dispatch(getUserData(access_token))
       .then(() => setIsLoaded(true))
-      .catch(() => {
+      .catch((error) => {
         setIsLoaded(false)
         authSwal.fire({
           icon: "error",
           title: "Ooops... algo salió mal",
-          text: "aca va el mensaje del error",
+          text: error.message,
           showConfirmButton: true,
           allowOutsideClick: false,
           confirmButtonText: "Ir a iniciar sesión",

@@ -1,10 +1,3 @@
-export enum AuthResponses {
-  BAD_CREDENTIALS = 401,
-  USER_NOT_FOUND = 404,
-  USER_ALREADY_EXISTS = 409,
-  INTERNAL_ERROR = 400 | 500,
-}
-
 export type LoginResponse = {
   token: string,
 };

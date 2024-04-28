@@ -3,6 +3,12 @@ import {AccountCtxInfo, AccountInformation, UserInformation} from "@/types/UserT
 import {AxiosError} from "axios";
 import {AppDispatch} from "@/lib/store";
 import {userSetAccountInfo} from "@/store/authSlice";
+import {ApiResponseHandler, ApiStatusResponses} from "@/types/ApiType";
+
+const userResponseHandler: ApiResponseHandler = {
+  [ApiStatusResponses.UNAUTHORIZED]: "La sesión ha expirado. Por favor, inicia sesión nuevamente.",
+  [ApiStatusResponses.INTERNAL_ERROR]: "Ha ocurrido un error inesperado.  Por favor, inicia sesión nuevamente.",
+};
 
 export const getUserData = (access_token: string) => {
   return async (dispatch: AppDispatch)  => {
@@ -28,8 +34,9 @@ export const getUserData = (access_token: string) => {
         available_amount: accountData.available_amount,
       }
       dispatch(userSetAccountInfo(ctxInfo))
-    } catch (error: AxiosError | any) {
-      throw new Error(error.response.message)
+    } catch (error: AxiosError|any) {
+      const errorCode: number = error.response.status
+      throw new Error(userResponseHandler[errorCode])
     }
   };
 };
