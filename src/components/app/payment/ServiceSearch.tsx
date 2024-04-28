@@ -64,7 +64,7 @@ export const ServiceSearch = () => {
       </FormProvider>
       <div className={"w-full p-5 flex flex-col gap-5 rounded-md bg-white text-black shadow-md md:p-10 xl:p-15"}>
         <h2 className={"text-xl font-semibold"}>{services.type === ServiceType.RECENT ? "Más recientes" : "Resultados de la búsqueda"}</h2>
-        {services ? <ServiceList services={services.list}/> : <div>Cargando servicios...</div>}
+        {services.list ? <ServiceList services={services.list}/> : <div>Cargando servicios...</div>}
       </div>
     </section>
   );
