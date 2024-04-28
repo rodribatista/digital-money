@@ -49,7 +49,7 @@ export const SignupForm = () => {
     authSignup(data)
       .then((email) => {
         authSwal.close();
-        router.replace(`/signup/successfully?email=${email}`)
+        router.replace(`/signup/success?email=${email}`)
       })
       .catch((error) => {
         authSwal.fire({

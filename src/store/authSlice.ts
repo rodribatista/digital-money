@@ -30,8 +30,9 @@ export const authSlice = createSlice({
       setAuthentication(action.payload)
     },
     userLoggedOut: (state) => {
-      state.accessToken = null;
       removeAuthentication()
+      state.accessToken = initialState.accessToken
+      state.accountInfo = initialState.accountInfo
     },
     userSetToken: (state, action: PayloadAction<string>) => {
       state.accessToken = action.payload;

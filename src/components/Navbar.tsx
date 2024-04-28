@@ -5,6 +5,7 @@ import Link from "next/link";
 
 import {useAppDispatch} from "@/lib/hooks";
 import {userLoggedOut} from "@/store/authSlice";
+import {authSwal} from "@/lib/sweet";
 
 const pathsInitial = {
   home: false,
@@ -30,11 +31,19 @@ export const Navbar = () => {
   }, [pathname]);
 
   const handleLogout = () => {
-    const ok = confirm("¿Cerrar sesión?")
-    if (ok) {
-      dispatch(userLoggedOut())
-      router.replace("/")
-    }
+    authSwal.fire({
+      title: "Cerrar sesión",
+      text: "¿Estás seguro de que quieres cerrar sesión?",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "Confirmar",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(userLoggedOut())
+        router.replace("/")
+      }
+    })
   }
   
   return (
