@@ -22,13 +22,14 @@ export const ServiceSearch = () => {
   const {
     data: recentServices,
     isLoading: isLoadingRecentServices,
+    isFetching: isFetchingRecentServices,
   } = useGetAllServicesQuery();
 
   const {
     data: searchedServices,
     isLoading: isLoadingSearchedServices,
     isFetching: isFetchingSearchedServices,
-  } = useGetServicesByNameQuery(getValues("searchValue")?.length < 3 ? skipToken : getValues("searchValue"));
+  } = useGetServicesByNameQuery(watch("searchValue")?.length < 3 ? skipToken : getValues("searchValue"));
 
   const [services, setServices] = useState<ServiceListType>({
     type: ServiceType.RECENT,
@@ -63,8 +64,11 @@ export const ServiceSearch = () => {
         <FormSearch name={"searchValue"} placeholder={"Buscá entre más de 5.000 empresas"}/>
       </FormProvider>
       <div className={"w-full p-5 flex flex-col gap-5 rounded-md bg-white text-black shadow-md md:p-10 xl:p-15"}>
-        <h2 className={"text-xl font-semibold"}>{services.type === ServiceType.RECENT ? "Más recientes" : "Resultados de la búsqueda"}</h2>
-        {services.list ? <ServiceList services={services.list}/> : <div>Cargando servicios...</div>}
+        <h2 className={"text-xl font-semibold"}>
+          {services.type === ServiceType.RECENT ? "Más recientes" : "Resultados de la búsqueda"}
+        </h2>
+        {isFetchingRecentServices || isFetchingSearchedServices ?
+          <div>Cargando servicios...</div> : <ServiceList services={services.list}/>}
       </div>
     </section>
   );
