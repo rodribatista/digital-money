@@ -1,9 +1,13 @@
 "use client";
 
-export const ServiceSelect = () => {
+type ServiceSelectProps = {
+  serviceId: number,
+}
+
+export const ServiceSelect = ({serviceId}: ServiceSelectProps) => {
 
   const handleDeleteCard = () => {
-    alert("Seleccionar servicio")
+    alert(`id servicio: ${serviceId}`)
   }
 
   return (
