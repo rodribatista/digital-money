@@ -37,10 +37,6 @@ export const ServiceSearch = () => {
   });
 
   useEffect(() => {
-    serviceSearchForm.setFocus("searchValue")
-  }, []);
-
-  useEffect(() => {
     if (!isLoadingRecentServices && getValues("searchValue").length < 3) {
       setServices({
         type: ServiceType.RECENT,
