@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 import {Activity, ActivityType} from "@/types/ActivityType";
-import {getWeekday, getMonth} from "@/utils/date";
+import {getMonth} from "@/utils/date";
 
 export const ActivityItem = ({type, destination, amount, dated}: Activity) => {
 
@@ -21,7 +21,7 @@ export const ActivityItem = ({type, destination, amount, dated}: Activity) => {
       </div>
       <div className={"flex flex-col items-end"}>
         <span className={"text-md"}>$ {amount},00</span>
-        <span className={"text-sm opacity-50"}>{`${getWeekday(date.getDay())}, ${date.getDate()} ${getMonth(date.getMonth())} ${date.getFullYear()}`}</span>
+        <span className={"text-sm opacity-50"}>{`${date.getDate()} ${getMonth(date.getMonth())} ${date.getFullYear()}`}</span>
       </div>
     </li>
   );
