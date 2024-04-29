@@ -68,17 +68,17 @@ export const icon: ResourceType = {
 };
 
 export const card: ResourceType = {
-  amex: {
+  3: {
     src: "/img/cards/card-amex.svg",
     alt: "Tarjeta American Express",
   },
-  master: {
-    src: "/img/cards/card-master.svg",
-    alt: "Tarjeta Mastercard",
-  },
-  visa: {
+  4: {
     src: "/img/cards/card-visa.svg",
     alt: "Tarjeta Visa",
+  },
+  5: {
+    src: "/img/cards/card-master.svg",
+    alt: "Tarjeta Mastercard",
   },
 };
 

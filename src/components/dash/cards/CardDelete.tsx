@@ -1,9 +1,13 @@
 "use client";
 
-export const CardDelete = () => {
+type CardDeleteProps = {
+  id: number,
+};
+
+export const CardDelete = ({id}: CardDeleteProps) => {
 
   const handleDeleteCard = () => {
-    alert("Eliminar tarjeta")
+    alert("Eliminar id: " + id);
   }
 
   return (
