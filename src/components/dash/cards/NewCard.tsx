@@ -1,4 +1,5 @@
 "use client";
+import {useRouter} from "next/navigation";
 import {useEffect, useState} from "react";
 import {FormProvider, useForm} from "react-hook-form";
 import {appToast} from "@/lib/sweet";
@@ -6,6 +7,7 @@ import {appToast} from "@/lib/sweet";
 import * as yup from "yup";
 import {yupResolver} from "@hookform/resolvers/yup";
 
+import {useAppSelector} from "@/lib/hooks";
 import {CardApi, useCreateCardMutation} from "@/api/cardApi";
 
 import {CardRender} from "@/components/dash/cards/CardRender";
@@ -14,7 +16,6 @@ import {FormButton} from "@/components/form/FormButton";
 import {CardHelp} from "@/components/dash/cards/CardHelp";
 
 import {CardFocusType, CardData, ApiCardData} from "@/types/CardType";
-import {useAppSelector} from "@/lib/hooks";
 
 const schema = yup.object({
   number: yup.string().min(16).max(16).required(),
@@ -24,6 +25,8 @@ const schema = yup.object({
 }).required()
 
 export const NewCard = () => {
+
+  const router = useRouter()
 
   const [createCard] = useCreateCardMutation();
   const {accessToken, accountInfo} = useAppSelector(state => state.auth);
@@ -62,8 +65,7 @@ export const NewCard = () => {
         title: "Tarjeta registrada",
         timer: 2000,
       });
-      newCardForm.reset()
-      newCardForm.setFocus(CardFocusType.CARD);
+      router.push("/dashboard/cards")
     });
   }
 
