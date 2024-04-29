@@ -43,7 +43,7 @@ export const LoginPassForm = ({email}: LoginPassParams) => {
     dispatch(authLogin(data))
       .then(() => {
         authSwal.close();
-        router.replace("/app/home");
+        router.replace("/dashboard/home");
       })
       .catch((error) => {
         authSwal.fire({

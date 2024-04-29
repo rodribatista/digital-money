@@ -48,12 +48,12 @@ export const Navbar = () => {
   
   return (
     <nav className={"w-full h-full p-10 flex flex-col gap-5 bg-yellow-500 text-black"}>
-      <Link href={"/app/home"} className={`${actualPath["home"] && "font-bold"}`}>Inicio</Link>
-      <Link href={"/app/activity"} className={`${actualPath["activity"] && "font-bold"}`}>Actividad</Link>
-      <Link href={"/app/profile"} className={`${actualPath["profile"] && "font-bold"}`}>Tu perfil</Link>
-      <Link href={"/app/deposit"} className={`${actualPath["deposit"] && "font-bold"}`}>Cargar dinero</Link>
-      <Link href={"/app/payment"} className={`${actualPath["payment"] && "font-bold"}`}>Pagar servicios</Link>
-      <Link href={"/app/cards"} className={`${actualPath["cards"] && "font-bold"}`}>Tarjetas</Link>
+      <Link href={"/dashboard/home"} className={`${actualPath["home"] && "font-bold"}`}>Inicio</Link>
+      <Link href={"/dashboard/activity"} className={`${actualPath["activity"] && "font-bold"}`}>Actividad</Link>
+      <Link href={"/dashboard/profile"} className={`${actualPath["profile"] && "font-bold"}`}>Tu perfil</Link>
+      <Link href={"/dashboard/deposit"} className={`${actualPath["deposit"] && "font-bold"}`}>Cargar dinero</Link>
+      <Link href={"/dashboard/payment"} className={`${actualPath["payment"] && "font-bold"}`}>Pagar servicios</Link>
+      <Link href={"/dashboard/cards"} className={`${actualPath["cards"] && "font-bold"}`}>Tarjetas</Link>
       <button className={"self-start opacity-25"} onClick={handleLogout}>Cerrar sesión</button>
     </nav>
   );
