@@ -15,7 +15,7 @@ export type UserInformation = {
   phone: string,
 };
 
-export type AccountCtxInfo = {
+export type UserContextInfo = {
   account_id: number,
   user_id: number,
   name: string,
@@ -23,3 +23,12 @@ export type AccountCtxInfo = {
   alias: string,
   available_amount: number,
 };
+
+export enum UserDataType {
+  id = 'ID',
+  dni = 'DNI',
+  email = 'Email',
+  firstname = 'Nombre',
+  lastname = 'Apellido',
+  phone = 'Teléfono',
+}

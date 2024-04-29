@@ -4,8 +4,8 @@ import {useRouter} from "next/navigation";
 
 import {useAppDispatch} from "@/lib/hooks";
 import {getAccessToken} from "@/utils/auth";
-import {userSetToken} from "@/store/authSlice";
-import {getUserData} from "@/api/userApi";
+import {userSetAccountInfo, userSetToken} from "@/store/authSlice";
+import {getUserInitialData} from "@/api/userApi";
 
 import {AppLoader} from "@/components/dash/AppLoader";
 import {authSwal} from "@/lib/sweet";
@@ -20,8 +20,11 @@ export const AppCheck: FC<PropsWithChildren> = ({children}) => {
   useEffect(() => {
     const access_token = getAccessToken();
     dispatch(userSetToken(access_token))
-    dispatch(getUserData(access_token))
-      .then(() => setIsLoaded(true))
+    dispatch(getUserInitialData(access_token))
+      .then((data) => {
+        dispatch(userSetAccountInfo(data))
+        setIsLoaded(true)
+      })
       .catch((error) => {
         setIsLoaded(false)
         authSwal.fire({
@@ -36,7 +39,7 @@ export const AppCheck: FC<PropsWithChildren> = ({children}) => {
             router.replace("/login")
           }
         });
-      })
+      });
   }, [])
 
   return isLoaded ? (<>{children}</>) : (

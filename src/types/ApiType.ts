@@ -9,3 +9,10 @@ export enum ApiStatusResponses {
 export interface ApiResponseHandler {
   [key: string]: string;
 }
+
+export type ApiErrorResponses = {
+  status: number,
+  data: {
+    error: string,
+  };
+}

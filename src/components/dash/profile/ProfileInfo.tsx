@@ -1,34 +1,18 @@
-import Image from "next/image";
+"use client";
+import {skipToken} from "@reduxjs/toolkit/query";
+
+import {useGetUserDataQuery} from "@/api/userApi";
+import {useAppSelector} from "@/lib/hooks";
+
 import {ProfileFormButton} from "@/components/dash/profile/ProfileForm";
 
-type UserData = {
-  dni: number,
-  email: string,
-  firstname: string,
-  lastname: string,
-  password: string,
-  phone: string,
-}
-
-export enum UserDataType {
-  dni = 'DNI',
-  email = 'Email',
-  firstname = 'Nombre',
-  lastname = 'Apellido',
-  password = 'Contraseña',
-  phone = 'Teléfono',
-}
-
-const userData: UserData = {
-  dni: 12345678,
-  email: "johndoe@mailito.com",
-  firstname: "John",
-  lastname: "Doe",
-  password: "myPassword123",
-  phone: "555-1234",
-}
+import {UserInformation, UserDataType} from "@/types/UserType";
 
 export const ProfileInfo = () => {
+
+  const {accessToken, accountInfo} = useAppSelector(state => state.auth);
+  const {data, isLoading} = useGetUserDataQuery(accessToken ? {access_token: accessToken, user_id: accountInfo.user_id}: skipToken);
+
   return (
     <section className={"w-full p-5 flex flex-col gap-5 rounded-md bg-white text-black shadow-md md:p-10 xl:p-15"}>
       <div className={"flex flex-row justify-between pb-2 border-b border-gray-500"}>
@@ -36,11 +20,11 @@ export const ProfileInfo = () => {
         <ProfileFormButton/>
       </div>
       <ul className={"flex flex-col gap-2"}>
-        {Object.keys(userData).map((key, index) => {
+        {Object.keys(data).map((key, index) => {
           return (
             <li key={index} className={"w-full pb-2 flex flex-col border-b border-gray-500 md:flex-row md:gap-5"}>
-              <h3 className={"w-1/4 font-semibold"}>{UserDataType[key as keyof UserData]}</h3>
-              <span>{userData[key as keyof UserData]}</span>
+              <h3 className={"w-1/4 font-semibold"}>{UserDataType[key as keyof UserInformation]}</h3>
+              <span>{data[key as keyof UserInformation]}</span>
             </li>
           );
         })}

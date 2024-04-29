@@ -1,42 +1,69 @@
-import {instance} from "@/api/baseApi";
-import {AccountCtxInfo, AccountInformation, UserInformation} from "@/types/UserType";
-import {AxiosError} from "axios";
+import {baseApi} from "@/api/baseApi";
+import {UserContextInfo} from "@/types/UserType";
 import {AppDispatch} from "@/lib/store";
-import {userSetAccountInfo} from "@/store/authSlice";
-import {ApiResponseHandler, ApiStatusResponses} from "@/types/ApiType";
+import {ApiResponseHandler, ApiStatusResponses, ApiErrorResponses} from "@/types/ApiType";
+
+export type UserApi = {
+  access_token: string,
+  user_id?: number,
+}
 
 const userResponseHandler: ApiResponseHandler = {
   [ApiStatusResponses.UNAUTHORIZED]: "La sesión ha expirado. Por favor, inicia sesión nuevamente.",
   [ApiStatusResponses.INTERNAL_ERROR]: "Ha ocurrido un error inesperado.  Por favor, inicia sesión nuevamente.",
 };
 
-export const getUserData = (access_token: string) => {
-  return async (dispatch: AppDispatch)  => {
+const userApi = baseApi.injectEndpoints({
+  endpoints: (builder) => ({
+    getAccountData: builder.query({
+      query: ({access_token}: UserApi) => ({
+        url: `/api/account`,
+        method: 'GET',
+        headers: {'Authorization': access_token},
+      }),
+    }),
+    getUserData: builder.query({
+      query: ({access_token, user_id}: UserApi) => ({
+        url: `/api/users/${user_id}`,
+        method: 'GET',
+        headers: {'Authorization': access_token},
+      }),
+    }),
+  }),
+  overrideExisting: false,
+})
+
+export const {
+  useGetAccountDataQuery,
+  useGetUserDataQuery,
+} = userApi
+
+export const getUserInitialData = (access_token: string) => {
+  return async (dispatch: AppDispatch): Promise<UserContextInfo> => {
     try {
-      const accountResponse = await instance.get("/account", {
-        headers: {
-          Authorization: access_token,
-        },
-      });
-      const accountData: AccountInformation = accountResponse.data;
-      const userDataResponse = await instance.get(`/users/${accountData.user_id}`, {
-        headers: {
-          Authorization: access_token,
-        },
-      })
-      const userData: UserInformation = userDataResponse.data;
-      const ctxInfo: AccountCtxInfo = {
-        account_id: accountData.id,
-        user_id: accountData.user_id,
-        name: `${userData.firstname} ${userData.lastname}`,
-        cvu: accountData.cvu,
-        alias: accountData.alias,
-        available_amount: accountData.available_amount,
+      const getAccountData = dispatch(userApi.endpoints.getAccountData.initiate({access_token}));
+      const {data: accountDataResponse, isError: accountDataIsError, error: accountDataErrorResponse} = await getAccountData;
+      if (accountDataIsError) {
+        const error = accountDataErrorResponse as ApiErrorResponses;
+        throw new Error(error.status.toString());
       }
-      dispatch(userSetAccountInfo(ctxInfo))
-    } catch (error: AxiosError|any) {
-      const errorCode: number = error.response.status
-      throw new Error(userResponseHandler[errorCode])
+      const getUserData = dispatch(userApi.endpoints.getUserData.initiate({access_token, user_id: accountDataResponse.user_id}));
+      const {data: userDataResponse, isError: userDataIsError, error: userDataErrorResponse} = await getUserData;
+      if (userDataIsError) {
+        const error = userDataErrorResponse as ApiErrorResponses;
+        throw new Error(error.status.toString());
+      }
+      return {
+        account_id: accountDataResponse.id,
+        user_id: accountDataResponse.user_id,
+        name: `${userDataResponse.firstname} ${userDataResponse.lastname}`,
+        cvu: accountDataResponse.cvu,
+        alias: accountDataResponse.alias,
+        available_amount: accountDataResponse.available_amount,
+      };
+    } catch (error: any) {
+      const errorCode: number = Number(error.message);
+      throw new Error(userResponseHandler[errorCode]);
     }
   };
 };
