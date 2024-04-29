@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from "next/link";
+
 import {AccountsInfo} from "@/components/dash/deposit/AccountsInfo";
 
 const DepositBankPage = () => {

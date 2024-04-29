@@ -3,6 +3,8 @@ import Image from "next/image";
 import {Activity, ActivityType} from "@/types/ActivityType";
 import {getMonth} from "@/utils/date";
 
+import {icon} from "@/utils/routes";
+
 export const ActivityItem = ({type, destination, amount, dated}: Activity) => {
 
   const date = new Date(dated);
@@ -16,7 +18,7 @@ export const ActivityItem = ({type, destination, amount, dated}: Activity) => {
   return (
     <li className={"w-full pb-5 flex flex-row justify-between items-center border-b border-gray-500"}>
       <div className={"flex flex-row gap-2"}>
-        <Image src={"/icon-activity.svg"} alt={"Icono para indicar el estado de la transferencia"} width={20} height={20}/>
+        <Image src={icon.activity.src} alt={icon.activity.alt} width={20} height={20}/>
         <h3>{renderActivity[type]}</h3>
       </div>
       <div className={"flex flex-col items-end"}>

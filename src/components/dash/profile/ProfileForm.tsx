@@ -2,6 +2,8 @@
 
 import Image from "next/image";
 
+import {icon} from "@/utils/routes";
+
 export const ProfileForm = () => {
   return (
     <div>
@@ -17,7 +19,7 @@ export const ProfileFormButton = () => {
   }
 
   return (
-    <Image src={"/icon-edit.svg"} alt={"Icono para editar la información del usuario"}
+    <Image src={icon.edit.src} alt={icon.edit.alt}
            className={"hover:cursor-pointer"} onClick={handleClick} width={25} height={25}/>
   );
 

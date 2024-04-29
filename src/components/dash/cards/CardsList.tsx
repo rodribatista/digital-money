@@ -1,12 +1,9 @@
-import Link from "next/link";
-import Image from "next/image";
-
 import {CardItem} from "@/components/dash/cards/CardItem";
 
 export enum CardType {
-  VISA = 'VISA',
-  MASTERCARD = 'MASTERCARD',
-  AMEX = 'AMEX',
+  VISA = "visa",
+  MASTERCARD = 'master',
+  AMEX = 'amex',
 }
 
 export type Card = {

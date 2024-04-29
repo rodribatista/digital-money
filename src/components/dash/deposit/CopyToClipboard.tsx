@@ -2,6 +2,8 @@
 import {useState} from "react";
 import Image from "next/image";
 
+import {icon} from "@/utils/routes";
+
 type CopyToClipboardProps = {
   value: string,
 };
@@ -24,9 +26,9 @@ export const CopyToClipboard = ({value}: CopyToClipboardProps) => {
   }
 
   if (isCopied) {
-    return <Image src={"/icon-check.svg"} alt={"Icono de check"} width={25} height={25}/>
+    return <Image src={icon.check.src} alt={icon.check.alt} width={25} height={25}/>
   } else {
-    return <Image src={"/icon-clipboard.svg"} alt={"Icono para copiar al portapapeles"} width={25} height={25}
+    return <Image src={icon.clipboard.src} alt={icon.clipboard.alt} width={25} height={25}
                   className={"hover:cursor-pointer"} onClick={handleCopyClick}/>
   }
 

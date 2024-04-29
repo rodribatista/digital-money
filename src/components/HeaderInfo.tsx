@@ -7,6 +7,8 @@ import {useAppSelector} from "@/lib/hooks";
 
 import {NavbarMobile} from "@/components/NavbarMobile";
 
+import {icon} from "@/utils/routes";
+
 export const HeaderInfo = () => {
 
   const pathname = usePathname();
@@ -29,7 +31,7 @@ export const HeaderInfo = () => {
       </div>
       <p className={"hidden md:block"}>Hola, {accountInfo.name}</p>
       <button className={"md:hidden"} onClick={handleShowMenu}>
-        <Image src={"/icon-menu.svg"} alt={"Icono de menú desplegable"} width={35} height={35}/>
+        <Image src={icon.menu.src} alt={icon.menu.alt} width={35} height={35}/>
       </button>
       {showMobileMenu && <NavbarMobile setShowMobileMenu={setShowMobileMenu}/>}
     </div>

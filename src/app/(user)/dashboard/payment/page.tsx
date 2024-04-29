@@ -1,4 +1,3 @@
-import React from 'react';
 import {ServiceSearch} from "@/components/dash/payment/ServiceSearch";
 
 const PaymentPage = () => {
