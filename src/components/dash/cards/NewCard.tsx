@@ -1,50 +1,70 @@
 "use client";
 import {useEffect, useState} from "react";
 import {FormProvider, useForm} from "react-hook-form";
+import {appToast} from "@/lib/sweet";
 
 import * as yup from "yup";
 import {yupResolver} from "@hookform/resolvers/yup";
 
+import {CardApi, useCreateCardMutation} from "@/api/cardApi";
+
+import {CardRender} from "@/components/dash/cards/CardRender";
 import {FormInput} from "@/components/form/FormInput";
 import {FormButton} from "@/components/form/FormButton";
-import {CardRender} from "@/components/dash/cards/CardRender";
+import {CardHelp} from "@/components/dash/cards/CardHelp";
 
-export enum FocusType {
-  CARD = 'number',
-  NAME = 'name',
-  DATE = 'expiry',
-  CVC = 'cvc',
-}
-
-export type NewCardData = {
-  number: number,
-  name: string,
-  expiry: number,
-  cvc: number,
-}
+import {CardFocusType, CardData, ApiCardData} from "@/types/CardType";
+import {useAppSelector} from "@/lib/hooks";
 
 const schema = yup.object({
-  number: yup.number().required(),
+  number: yup.string().min(16).max(16).required(),
   name: yup.string().required(),
-  expiry: yup.number().required(),
-  cvc: yup.number().required(),
+  expiry: yup.string().min(6).max(6).required(),
+  cvc: yup.string().min(3).max(3).required(),
 }).required()
 
 export const NewCard = () => {
 
-  const newCardForm = useForm<NewCardData>({
+  const [createCard] = useCreateCardMutation();
+  const {accessToken, accountInfo} = useAppSelector(state => state.auth);
+
+  const newCardForm = useForm<CardData>({
     resolver: yupResolver(schema),
   })
 
-  const [focus, setFocus] = useState(FocusType.CARD)
+  const [focus, setFocus] = useState(CardFocusType.CARD)
 
   useEffect(() => {
-    newCardForm.setFocus("number");
+    newCardForm.setFocus(CardFocusType.CARD);
   }, []);
 
-  const onSubmit = (data: NewCardData) => {
-    console.log("form")
-    alert(JSON.stringify(data))
+  const onSubmit = (data: CardData) => {
+    appToast.fire({
+      title: "Registrando tarjeta...",
+      willOpen() {
+        appToast.showLoading();
+      },
+    });
+    const cardData: ApiCardData = {
+      number_id: Number(data.number),
+      first_last_name: data.name,
+      expiration_date: data.expiry.slice(0, 2) + "/" + data.expiry.slice(2, 6),
+      cod: Number(data.cvc),
+    };
+    const cardRequest: CardApi = {
+      access_token: accessToken || "",
+      account_id: accountInfo.account_id,
+      card_data: cardData,
+    };
+    createCard(cardRequest).then(() => {
+      appToast.fire({
+        icon: "success",
+        title: "Tarjeta registrada",
+        timer: 2000,
+      });
+      newCardForm.reset()
+      newCardForm.setFocus(CardFocusType.CARD);
+    });
   }
 
   return (
@@ -52,14 +72,30 @@ export const NewCard = () => {
       <FormProvider {...newCardForm}>
         <CardRender focus={focus}/>
         <form className={"w-full mb-10 flex flex-col gap-5 md:w-2/3 xl:w-1/2"}>
-          <FormInput type={"number"} name={"number"} placeholder={"Número de tarjeta"} onFocus={() => setFocus(FocusType.CARD)}/>
-          <FormInput type={"text"} name={"name"} placeholder={"Nombre y apellido"} onFocus={() => setFocus(FocusType.NAME)}/>
-          <FormInput type={"number"} name={"expiry"} placeholder={"Fecha de expiración"} onFocus={() => setFocus(FocusType.DATE)}/>
-          <FormInput type={"number"} name={"cvc"} placeholder={"Código de seguridad"} onFocus={() => setFocus(FocusType.CVC)}/>
+          <div className={"flex flex-col gap-2"}>
+            <FormInput type={"number"} name={"number"} placeholder={"Número de tarjeta"}
+                       onFocus={() => setFocus(CardFocusType.CARD)}/>
+            <CardHelp message={"16 números en total, sin ingresar espacios ni carácteres."}/>
+          </div>
+          <div className={"flex flex-col gap-2"}>
+            <FormInput type={"text"} name={"name"} placeholder={"Nombre y apellido"}
+                       onFocus={() => setFocus(CardFocusType.NAME)}/>
+            <CardHelp message={"Ingresa tu nombre y apellido tal como aparece en la tarjeta."}/>
+          </div>
+          <div className={"flex flex-col gap-2"}>
+            <FormInput type={"number"} name={"expiry"} placeholder={"Fecha de expiración"}
+                       onFocus={() => setFocus(CardFocusType.DATE)}/>
+            <CardHelp message={"6 digitos en total, mes y año. Formato MMAAAA."}/>
+          </div>
+          <div className={"flex flex-col gap-2"}>
+            <FormInput type={"number"} name={"cvc"} placeholder={"Código de seguridad"}
+                       onFocus={() => setFocus(CardFocusType.CVC)}/>
+            <CardHelp message={"3 digitos en total, ubicados en el reverso de la tarjeta."}/>
+          </div>
           <FormButton onSubmit={onSubmit}>Agregar tarjeta</FormButton>
         </form>
       </FormProvider>
     </section>
   );
 
-}
+};

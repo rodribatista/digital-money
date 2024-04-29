@@ -1,12 +1,12 @@
 import {useFormContext} from "react-hook-form";
 import Cards from 'react-credit-cards-2';
 
-import {FocusType} from "@/components/dash/cards/NewCard";
+import {CardFocusType} from "@/types/CardType";
 
 import 'react-credit-cards-2/dist/es/styles-compiled.css';
 
 type CardRenderProps = {
-  focus: FocusType,
+  focus: CardFocusType,
 }
 export const CardRender = ({focus}: CardRenderProps) => {
 

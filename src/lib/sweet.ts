@@ -11,3 +11,14 @@ export const authSwal = Swal.mixin({
   },
   buttonsStyling: false
 });
+
+export const appToast = Swal.mixin({
+  toast: true,
+  position: "top",
+  showConfirmButton: false,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.onmouseenter = Swal.stopTimer;
+    toast.onmouseleave = Swal.resumeTimer;
+  },
+});
