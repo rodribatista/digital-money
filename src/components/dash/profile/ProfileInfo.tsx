@@ -7,6 +7,7 @@ import {useAppSelector} from "@/lib/hooks";
 import {ProfileFormButton} from "@/components/dash/profile/ProfileForm";
 
 import {UserInformation, UserDataType} from "@/types/UserType";
+import {ProfileItem} from "@/components/dash/profile/ProfileItem";
 
 export const ProfileInfo = () => {
 
@@ -20,14 +21,12 @@ export const ProfileInfo = () => {
         <ProfileFormButton/>
       </div>
       <ul className={"flex flex-col gap-2"}>
-        {Object.keys(data).map((key, index) => {
-          return (
-            <li key={index} className={"w-full pb-2 flex flex-col border-b border-gray-500 md:flex-row md:gap-5"}>
-              <h3 className={"w-1/4 font-semibold"}>{UserDataType[key as keyof UserInformation]}</h3>
-              <span>{data[key as keyof UserInformation]}</span>
-            </li>
-          );
+        {Object.keys(data).slice(1).map((key) => {
+          return <ProfileItem key={key}
+                              name={UserDataType[key as keyof UserInformation]}
+                              value={data[key as keyof UserInformation]}/>;
         })}
+        <ProfileItem name={UserDataType.password} value={"********"}/>
       </ul>
       <span className={"text-sm text-gray-700"}>* Para editar tus datos haz click en el lapiz.</span>
     </section>

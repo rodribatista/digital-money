@@ -13,6 +13,7 @@ export type UserInformation = {
   firstname: string,
   lastname: string,
   phone: string,
+  password: string,
 };
 
 export type UserContextInfo = {
@@ -31,4 +32,5 @@ export enum UserDataType {
   firstname = 'Nombre',
   lastname = 'Apellido',
   phone = 'Teléfono',
+  password = 'Contraseña',
 }
