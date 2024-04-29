@@ -1,28 +1,30 @@
 "use client";
-import {ActivityItem} from "@/components/app/activity/ActivityItem";
-import {Activity} from "@/types/ActivityType";
-import {useAppSelector} from "@/lib/hooks";
-import {useGetAllAccountActivityQuery} from "@/api/activityApi";
-import {skipToken} from "@reduxjs/toolkit/query";
+import React, {useEffect, useState} from 'react';
+import {ActivityFilterButton} from "@/components/app/activity/ActivityFilter";
+import {ActivityRender} from "@/components/app/activity/ActivityRender";
+import {ActivityPagination} from "@/components/app/activity/ActivityPagination";
+import {useRouter, useSearchParams} from "next/navigation";
 
-type ActivityListProps = {
-  onlyLast: boolean,
-};
+export const ActivityList = () => {
 
-export const ActivityList = ({onlyLast}: ActivityListProps) => {
+  const router = useRouter()
+  const params = useSearchParams()
 
-  const {accessToken, accountInfo} = useAppSelector(state => state.auth);
-  const {data, isLoading} = useGetAllAccountActivityQuery(accessToken ? {access_token: accessToken, account_id: accountInfo.account_id}: skipToken);
+  const [page, setPage] = useState(Number(params.get("page")) || 1);
+  const [maxPage, setMaxPage] = useState(1);
 
-  const activityList = onlyLast ? data?.toReversed().slice(0, 5) : data.toReversed();
+  useEffect(() => {
+    router.push(`/app/activity?page=${page}`)
+  }, [page]);
 
   return (
-    <ul className={"flex flex-col gap-5"}>
-      {!isLoading ? (data.length ?
-          activityList.map((activity: Activity) => <ActivityItem key={activity.id} {...activity}/>)
-          : <li className={"w-full pb-5 border-b border-gray-500"}>No hay actividad registrada</li>)
-        : <li className={"w-full pb-5 border-b border-gray-500"}>Cargando actividad...</li>}
-    </ul>
+    <section className={"w-full p-5 flex flex-col gap-5 rounded-md bg-white text-black shadow-md md:p-10 xl:p-15"}>
+      <div className={"pb-5 flex flex-row justify-between border-b border-gray-500"}>
+        <h2 className={"text-xl font-semibold"}>Tu actividad</h2>
+        <ActivityFilterButton/>
+      </div>
+      <ActivityRender page={page} setMaxPage={setMaxPage}/>
+      <ActivityPagination page={page} setPage={setPage} maxPage={maxPage}/>
+    </section>
   );
-
 };
