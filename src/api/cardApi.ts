@@ -15,6 +15,7 @@ const cardApi = baseApi.injectEndpoints({
         method: 'GET',
         headers: {'Authorization': access_token},
       }),
+      providesTags: ['cards']
     }),
     createCard: builder.mutation({
       query: ({access_token, account_id, card_data}: CardApi) => ({
@@ -23,6 +24,7 @@ const cardApi = baseApi.injectEndpoints({
         headers: {'Authorization': access_token},
         body: card_data,
       }),
+      invalidatesTags: ['cards'],
     }),
   }),
   overrideExisting: false,
