@@ -34,3 +34,7 @@ export enum UserDataType {
   phone = 'Teléfono',
   password = 'Contraseña',
 }
+
+export type UpdateUserData = {
+  [key: string]: string | number;
+};

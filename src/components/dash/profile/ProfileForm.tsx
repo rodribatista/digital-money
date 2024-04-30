@@ -1,26 +1,100 @@
 "use client";
+import {useRouter} from "next/navigation";
+import {useEffect} from "react";
+import {skipToken} from "@reduxjs/toolkit/query";
+import {FormProvider, useForm} from "react-hook-form";
 
-import Image from "next/image";
+import * as yup from "yup";
+import {yupResolver} from "@hookform/resolvers/yup";
 
-import {icon} from "@/utils/routes";
+import {useAppSelector} from "@/lib/hooks";
+import {useGetUserDataQuery, UserApi, useUpdateUserDataMutation} from "@/api/userApi";
+import {appToast} from "@/lib/sweet";
+
+import {FormInput} from "@/components/form/FormInput";
+import {FormButton} from "@/components/form/FormButton";
+
+import {UpdateUserData} from "@/types/UserType";
+
+export const schema = yup.object({
+  dni: yup.number().positive(),
+  email: yup.string().trim().lowercase().email(),
+  firstname: yup.string().trim(),
+  lastname: yup.string().trim(),
+  password: yup.string().trim().min(6).max(20)
+    .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{6,20}$/),
+  phone: yup.string().trim(),
+});
 
 export const ProfileForm = () => {
+
+  const router = useRouter();
+
+  const {accessToken, accountInfo} = useAppSelector(state => state.auth);
+  const {data, isLoading} = useGetUserDataQuery(accessToken ? {access_token: accessToken, user_id: accountInfo.user_id}: skipToken);
+
+  const [updateUser] = useUpdateUserDataMutation();
+
+  const profileEditForm = useForm<UpdateUserData>({
+    resolver: yupResolver(schema),
+  })
+
+  useEffect(() => {
+    if (!isLoading) {
+      Object.keys(data).slice(1).map((key) => (
+        profileEditForm.setValue(key, data[key])
+      ));
+    }
+  }, [isLoading]);
+
+  const onSubmit = (field: string) => {
+    appToast.fire({
+      title: "Actualizando datos...",
+      willOpen() {
+        appToast.showLoading();
+      },
+    });
+    const updateRequest: UserApi = {
+      access_token: accessToken || "",
+      user_id: accountInfo.user_id,
+      user_data: {[field]: profileEditForm.getValues(field)},
+    };
+    updateUser(updateRequest).then(() => {
+      appToast.fire({
+        icon: "success",
+        title: "Usuario actualizado.",
+        timer: 2000,
+      });
+      router.push("/dashboard/profile");
+    });
+  };
+
   return (
-    <div>
-      Profile Form
-    </div>
-  );
-};
-
-export const ProfileFormButton = () => {
-
-  const handleClick = () => {
-    alert("Editando perfil")
-  }
-
-  return (
-    <Image src={icon.edit.src} alt={icon.edit.alt}
-           className={"hover:cursor-pointer"} onClick={handleClick} width={25} height={25}/>
+    <section className={"w-full mt-5 flex flex-col gap-10 items-center"}>
+      <FormProvider {...profileEditForm}>
+        <form className={"w-full mb-10 flex flex-col gap-5 md:w-2/3 xl:w-1/2"}>
+          {Object.keys(data).slice(1).map((key) => (
+            <div key={key} className={"w-full pb-5 flex flex-col gap-5 border-b border-gray-700 xl:flex-row"}>
+              <FormInput type={"text"} name={key} placeholder={"Nombre*"}/>
+              <div className={"w-full self-end xl:w-1/3"}>
+                <FormButton onSubmit={() => onSubmit(key)}>Actualizar</FormButton>
+              </div>
+            </div>
+          ))}
+          <div className={"w-full flex flex-col gap-5 xl:flex-row"}>
+            <div className={"w-full flex flex-col gap-2"}>
+              <FormInput type={"password"} name={"password"} placeholder={"********"}/>
+              <span className={"self-center text-sm text-center text-black md:w-3/4"}>
+                Usá entre 6 y 20 carácteres. Debe contener al menos al menos una mayúscula y un número.
+              </span>
+            </div>
+            <div className={"w-full self-end xl:w-1/3 xl:self-start"}>
+              <FormButton onSubmit={() => onSubmit("password")}>Actualizar</FormButton>
+            </div>
+          </div>
+        </form>
+      </FormProvider>
+    </section>
   );
 
 };

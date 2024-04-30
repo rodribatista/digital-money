@@ -1,11 +1,13 @@
 import {baseApi} from "@/api/baseApi";
-import {UserContextInfo} from "@/types/UserType";
 import {AppDispatch} from "@/lib/store";
+
+import {UserContextInfo, UpdateUserData} from "@/types/UserType";
 import {ApiResponseHandler, ApiStatusResponses, ApiErrorResponses} from "@/types/ApiType";
 
 export type UserApi = {
   access_token: string,
   user_id?: number,
+  user_data?: UpdateUserData,
 }
 
 const userResponseHandler: ApiResponseHandler = {
@@ -28,6 +30,16 @@ const userApi = baseApi.injectEndpoints({
         method: 'GET',
         headers: {'Authorization': access_token},
       }),
+      providesTags: ['user'],
+    }),
+    updateUserData: builder.mutation({
+      query: ({access_token, user_id, user_data}: UserApi) => ({
+        url: `/api/users/${user_id}`,
+        method: 'PATCH',
+        headers: {'Authorization': access_token},
+        body: user_data,
+      }),
+      invalidatesTags: ['user'],
     }),
   }),
   overrideExisting: false,
@@ -36,6 +48,7 @@ const userApi = baseApi.injectEndpoints({
 export const {
   useGetAccountDataQuery,
   useGetUserDataQuery,
+  useUpdateUserDataMutation,
 } = userApi
 
 export const getUserInitialData = (access_token: string) => {
