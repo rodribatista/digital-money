@@ -1,4 +1,4 @@
-export interface DateHandler {
+interface DateHandler {
   [key: string]: string;
 }
 
@@ -11,8 +11,6 @@ const Weekday: DateHandler = {
   5: "Viernes",
   6: "Sábado",
 }
-
-export const getWeekday = (day: number) => Weekday[day]
 
 const Month: DateHandler = {
   0: "Enero",
@@ -29,4 +27,10 @@ const Month: DateHandler = {
   11: "Diciembre",
 }
 
-export const getMonth = (month: number) => Month[month]
+export const getShortDate = (date: Date): string => {
+  return `${date.getDate()} ${Month[date.getMonth()]} ${date.getFullYear()}`
+};
+
+export const getFullDate = (date: Date): string => {
+  return `${Weekday[date.getDay()]} ${date.getDate()} de ${Month[date.getMonth()]} de ${date.getFullYear()}`
+};

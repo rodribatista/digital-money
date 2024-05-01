@@ -1,4 +1,5 @@
 import {baseApi} from "@/api/baseApi";
+import {Activity} from "@/types/ActivityType";
 
 export type ActivityApi = {
   access_token: string,
@@ -15,10 +16,18 @@ const activityApi = baseApi.injectEndpoints({
         headers: {'Authorization': access_token},
       }),
     }),
+    getAccountActivityById: builder.query<Activity, ActivityApi>({
+      query: ({access_token, account_id, transaction_id}) => ({
+        url: `/api/accounts/${account_id}/transactions/${transaction_id}`,
+        method: 'GET',
+        headers: {'Authorization': access_token},
+      }),
+    }),
   }),
   overrideExisting: false,
 })
 
 export const {
   useGetAllAccountActivityQuery,
+  useGetAccountActivityByIdQuery,
 } = activityApi
