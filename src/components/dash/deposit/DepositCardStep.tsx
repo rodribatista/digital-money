@@ -5,6 +5,7 @@ import {SelectCard} from "@/components/dash/deposit/SelectCard";
 
 import {DepositSteps} from "@/types/DepositType";
 import {useSearchParams} from "next/navigation";
+import {SelectAmount} from "@/components/dash/deposit/SelectAmount";
 
 type StepRender = {
   [key in DepositSteps]: ReactNode;
@@ -21,7 +22,7 @@ export const DepositCardStep = () => {
 
   const stepRender: StepRender = {
     [DepositSteps.CARD]: <SelectCard/>,
-    [DepositSteps.AMOUNT]: <div className={"text-black"}>Amount</div>,
+    [DepositSteps.AMOUNT]: <SelectAmount/>,
     [DepositSteps.CONFIRM]: <div className={"text-black"}>Confirm</div>,
   };
 
