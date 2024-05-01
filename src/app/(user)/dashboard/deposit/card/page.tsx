@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from "next/link";
+import {SelectCard} from "@/components/dash/deposit/SelectCard";
 
 const DepositCardPage = () => {
   return (
@@ -9,6 +10,7 @@ const DepositCardPage = () => {
         <span>/</span>
         <h1 className={"font-semibold"}>Seleccionar tarjeta</h1>
       </div>
+      <SelectCard/>
     </>
   );
 };
