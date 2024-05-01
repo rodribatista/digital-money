@@ -17,8 +17,8 @@ export const CardRender = ({focus}: CardRenderProps) => {
       <Cards
         number={watch("number") || null}
         name={watch("name") || "Nombre y apellido"}
-        expiry={watch("expiry") || 3001}
-        cvc={watch("cvc") || 123}
+        expiry={watch("expiry") || 102028}
+        cvc={watch("cvc") || 456}
         focused={focus}
         acceptedCards={["visa", "mastercard", "amex"]}
       />
