@@ -15,7 +15,7 @@ const DepositPage = () => {
       <Link href={"/dashboard/deposit/card"}
             className={"w-full p-10 flex flex-row gap-5 items-center rounded-md bg-black shadow-md md:p-15"}>
         <Image src={icon.card.src} alt={icon.card.alt} width={35} height={35}/>
-        <h2 className={"text-yellow-500 text-xl font-semibold md:text-2xl"}>Seleccionar tarjeta</h2>
+        <h2 className={"text-yellow-500 text-xl font-semibold md:text-2xl"}>Deposito con tarjeta</h2>
       </Link>
     </>
   );

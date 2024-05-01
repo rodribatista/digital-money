@@ -1,6 +1,9 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
+import {useRouter} from "next/navigation";
+import {useEffect, useState} from "react";
+import {useFormContext} from "react-hook-form";
 import {skipToken} from "@reduxjs/toolkit/query";
 
 import {useAppSelector} from "@/lib/hooks";
@@ -11,10 +14,11 @@ import {SelectCardItem} from "@/components/dash/deposit/SelectCardItem";
 import {CardType} from "@/types/CardType";
 
 import {icon} from "@/utils/routes";
-import {useFormContext} from "react-hook-form";
-import {useEffect, useState} from "react";
+
 
 export const SelectCard = () => {
+
+  const router = useRouter();
 
   const {accessToken, accountInfo} = useAppSelector(state => state.auth);
   const {data, isLoading} = useGetAllCardsQuery(accessToken ? {access_token: accessToken, account_id: accountInfo.account_id}: skipToken);
@@ -29,6 +33,10 @@ export const SelectCard = () => {
     }
     setContinueForm(false)
   }, [watch("card_id")]);
+
+  const handleContinue = () => {
+    router.push("/dashboard/deposit/card?step=1")
+  }
 
   return (
     <>
@@ -48,7 +56,7 @@ export const SelectCard = () => {
         </div>
       </section>
       <button className={"w-full py-5 bg-yellow-500 rounded-md text-black text-center font-semibold shadow-md disabled:bg-gray-500 hover:cursor-pointer"}
-              disabled={!continueForm}>
+              disabled={!continueForm} onClick={handleContinue}>
         Continuar
       </button>
     </>
