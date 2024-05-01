@@ -26,6 +26,14 @@ const cardApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ['cards'],
     }),
+    deleteCard: builder.mutation({
+      query: ({access_token, account_id, card_id}: CardApi & {card_id: number}) => ({
+        url: `/api/accounts/${account_id}/cards/${card_id}`,
+        method: 'DELETE',
+        headers: {'Authorization': access_token},
+      }),
+      invalidatesTags: ['cards'],
+    }),
   }),
   overrideExisting: false,
 })
@@ -33,4 +41,5 @@ const cardApi = baseApi.injectEndpoints({
 export const {
   useGetAllCardsQuery,
   useCreateCardMutation,
+  useDeleteCardMutation,
 } = cardApi

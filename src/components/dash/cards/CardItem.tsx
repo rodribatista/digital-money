@@ -19,7 +19,7 @@ export const CardItem = ({id, number_id}: CardType) => {
         <Image src={card[cardType].src} alt={card[cardType].alt} width={30} height={30}/>
         <span>terminada en {lastNumbers}</span>
       </div>
-      <CardDelete id={id}/>
+      <CardDelete card_id={id}/>
     </li>
   );
 
