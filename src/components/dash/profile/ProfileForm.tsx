@@ -15,6 +15,7 @@ import {FormInput} from "@/components/form/FormInput";
 import {FormButton} from "@/components/form/FormButton";
 
 import {UpdateUserData} from "@/types/UserType";
+import {MutationsApiResponses} from "@/types/ApiType";
 
 export const schema = yup.object({
   dni: yup.number().positive(),
@@ -59,10 +60,18 @@ export const ProfileForm = () => {
       user_id: accountInfo.user_id,
       user_data: {[field]: profileEditForm.getValues(field)},
     };
-    updateUser(updateRequest).then(() => {
+    updateUser(updateRequest).then(({error}: MutationsApiResponses) => {
+      if (error) {
+        appToast.fire({
+          icon: "error",
+          title: "Error al actualizar los datos del usuario.",
+          timer: 2000,
+        });
+        return;
+      }
       appToast.fire({
         icon: "success",
-        title: "Usuario actualizado.",
+        title: "Datos del usuario actualizados correctamente.",
         timer: 2000,
       });
       router.push("/dashboard/profile");

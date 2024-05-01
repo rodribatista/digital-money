@@ -1,3 +1,8 @@
+import {CardType} from "@/types/CardType";
+import {UserInformation} from "@/types/UserType";
+import {FetchBaseQueryError} from "@reduxjs/toolkit/query";
+import {SerializedError} from "@reduxjs/toolkit";
+
 export enum ApiStatusResponses {
   UNAUTHORIZED = 401,
   FORBIDDEN = 403,
@@ -15,4 +20,9 @@ export type ApiErrorResponses = {
   data: {
     error: string,
   };
+}
+
+export type MutationsApiResponses = {
+  error?: FetchBaseQueryError | SerializedError,
+  data?: CardType | UserInformation,
 }

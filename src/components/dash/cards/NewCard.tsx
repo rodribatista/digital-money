@@ -16,6 +16,7 @@ import {FormButton} from "@/components/form/FormButton";
 import {CardHelp} from "@/components/dash/cards/CardHelp";
 
 import {CardFocusType, CardData, ApiCardData} from "@/types/CardType";
+import {MutationsApiResponses} from "@/types/ApiType";
 
 const schema = yup.object({
   number: yup.string().min(16).max(16).required(),
@@ -59,10 +60,18 @@ export const NewCard = () => {
       account_id: accountInfo.account_id,
       card_data: cardData,
     };
-    createCard(cardRequest).then(() => {
+    createCard(cardRequest).then(({error}: MutationsApiResponses) => {
+      if (error) {
+        appToast.fire({
+          icon: "error",
+          title: "Error al registrar tarjeta.",
+          timer: 2000,
+        });
+        return;
+      }
       appToast.fire({
         icon: "success",
-        title: "Tarjeta registrada",
+        title: "Tarjeta registrada correctamente.",
         timer: 2000,
       });
       router.push("/dashboard/cards")
