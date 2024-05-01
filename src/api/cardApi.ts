@@ -1,10 +1,11 @@
 import {baseApi} from "@/api/baseApi";
-import {ApiCardData} from "@/types/CardType";
+import {ApiCardData, CardType} from "@/types/CardType";
 
 export type CardApi = {
   access_token: string,
   account_id: number,
   card_data?: ApiCardData,
+  card_id?: number,
 }
 
 const cardApi = baseApi.injectEndpoints({
@@ -17,6 +18,13 @@ const cardApi = baseApi.injectEndpoints({
       }),
       providesTags: ['cards']
     }),
+    getCardById: builder.query<CardType, CardApi>({
+      query: ({access_token, account_id, card_id}: CardApi) => ({
+        url: `/api/accounts/${account_id}/cards/${card_id}`,
+        method: 'GET',
+        headers: {'Authorization': access_token},
+      }),
+    }),
     createCard: builder.mutation({
       query: ({access_token, account_id, card_data}: CardApi) => ({
         url: `/api/accounts/${account_id}/cards`,
@@ -27,7 +35,7 @@ const cardApi = baseApi.injectEndpoints({
       invalidatesTags: ['cards'],
     }),
     deleteCard: builder.mutation({
-      query: ({access_token, account_id, card_id}: CardApi & {card_id: number}) => ({
+      query: ({access_token, account_id, card_id}: CardApi) => ({
         url: `/api/accounts/${account_id}/cards/${card_id}`,
         method: 'DELETE',
         headers: {'Authorization': access_token},
@@ -40,6 +48,7 @@ const cardApi = baseApi.injectEndpoints({
 
 export const {
   useGetAllCardsQuery,
+  useGetCardByIdQuery,
   useCreateCardMutation,
   useDeleteCardMutation,
 } = cardApi

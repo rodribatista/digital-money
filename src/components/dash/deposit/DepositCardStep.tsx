@@ -1,11 +1,12 @@
 "use client";
+import {useSearchParams} from "next/navigation";
 import {ReactNode, useEffect, useState} from "react";
 
 import {SelectCard} from "@/components/dash/deposit/SelectCard";
+import {SelectAmount} from "@/components/dash/deposit/SelectAmount";
+import {CheckDeposit} from "@/components/dash/deposit/CheckDeposit";
 
 import {DepositSteps} from "@/types/DepositType";
-import {useSearchParams} from "next/navigation";
-import {SelectAmount} from "@/components/dash/deposit/SelectAmount";
 
 type StepRender = {
   [key in DepositSteps]: ReactNode;
@@ -23,7 +24,7 @@ export const DepositCardStep = () => {
   const stepRender: StepRender = {
     [DepositSteps.CARD]: <SelectCard/>,
     [DepositSteps.AMOUNT]: <SelectAmount/>,
-    [DepositSteps.CONFIRM]: <div className={"text-black"}>Confirm</div>,
+    [DepositSteps.CONFIRM]: <CheckDeposit/>,
   };
 
   const stepMappings: StepMapping = {
