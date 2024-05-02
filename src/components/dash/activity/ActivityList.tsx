@@ -22,7 +22,7 @@ export const ActivityList = () => {
         <h2 className={"text-xl font-semibold"}>Tu actividad</h2>
         {/*<ActivityFilterButton/>*/}
       </div>
-      <ActivityRender page={page} setMaxPage={setMaxPage}/>
+      <ActivityRender page={page} perPage={10} setMaxPage={setMaxPage}/>
       <ActivityPagination page={page} setPage={setPage} maxPage={maxPage}/>
     </section>
   );

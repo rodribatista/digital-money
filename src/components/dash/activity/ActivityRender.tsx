@@ -11,20 +11,21 @@ import {Activity} from "@/types/ActivityType";
 
 type ActivityListProps = {
   page: number,
+  perPage: number,
   setMaxPage?: Dispatch<SetStateAction<number>>,
 };
 
-export const ActivityRender = ({page, setMaxPage}: ActivityListProps) => {
+export const ActivityRender = ({page, perPage, setMaxPage}: ActivityListProps) => {
 
-  const start =  (page - 1) * 5;
-  const end = start + 5;
+  const start =  (page - 1) * perPage;
+  const end = start + perPage;
 
   const {accessToken, accountInfo} = useAppSelector(state => state.auth);
   const {data, isLoading} = useGetAllAccountActivityQuery(accessToken ? {access_token: accessToken, account_id: accountInfo.account_id}: skipToken);
 
   useEffect(() => {
     if (!isLoading && setMaxPage) {
-      setMaxPage(Math.round(data.length / 5));
+      setMaxPage(Math.ceil(data.length / perPage));
     }
   }, [isLoading]);
 
