@@ -32,5 +32,8 @@ export const getShortDate = (date: Date): string => {
 };
 
 export const getFullDate = (date: Date): string => {
-  return `${Weekday[date.getDay()]} ${date.getDate()} de ${Month[date.getMonth()]} de ${date.getFullYear()}`
+  const hours = date.getHours() < 10 ? `0${date.getHours()}` : date.getHours();
+  const minutes = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
+  return `
+    ${Weekday[date.getDay()]}, ${date.getDate()} ${Month[date.getMonth()]} ${date.getFullYear()} ${hours}:${minutes}`;
 };
