@@ -1,4 +1,5 @@
 "use client";
+import {useRouter} from "next/navigation";
 
 type ServiceSelectProps = {
   serviceId: number,
@@ -6,12 +7,14 @@ type ServiceSelectProps = {
 
 export const ServiceSelect = ({serviceId}: ServiceSelectProps) => {
 
-  const handleDeleteCard = () => {
-    alert(`id servicio: ${serviceId}`)
+  const router = useRouter();
+
+  const handleServiceSelect = () => {
+    router.push(`/dashboard/payment/${serviceId}`)
   }
 
   return (
-    <button onClick={handleDeleteCard} className={"text-sm font-bold"}>Seleccionar</button>
+    <button onClick={handleServiceSelect} className={"text-sm font-bold"}>Seleccionar</button>
   );
 
 };

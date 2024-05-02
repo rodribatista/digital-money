@@ -1,4 +1,5 @@
 import {baseApi} from "@/api/baseApi";
+import {Service} from "@/types/ServiceType";
 
 const serviceApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -14,7 +15,7 @@ const serviceApi = baseApi.injectEndpoints({
         method: 'GET',
       }),
     }),
-    getServiceById: builder.query({
+    getServiceById: builder.query<Service, number>({
       query: (id: number) => ({
         url: `/service/${id}`,
         method: 'GET',
