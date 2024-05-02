@@ -72,6 +72,7 @@ export const CheckDeposit = () => {
     setValue("dated", new Date().toISOString())
     setValue("origin", "origin")
     setValue("destination", "destination")
+    // @ts-ignore
     handleSubmit(onSubmit)();
   }
 

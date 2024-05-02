@@ -1,4 +1,5 @@
 import Image from "next/image";
+import {Suspense} from "react";
 
 import {SignupSuccessButton} from "@/components/auth/SignupSuccessButton";
 
@@ -17,7 +18,9 @@ const SignupSuccessPage = () => {
       <p className={"text-base text-center"}>
         Hemos enviado un correo de confirmación para validar tu email, por favor revisalo para iniciar sesión.
       </p>
-      <SignupSuccessButton/>
+      <Suspense>
+        <SignupSuccessButton/>
+      </Suspense>
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import {Suspense} from "react";
 
 import {DepositCardStep} from "@/components/dash/deposit/DepositCardStep";
 
@@ -10,7 +11,9 @@ const DepositCardPage = () => {
         <span>/</span>
         <h1 className={"font-semibold"}>Deposito con tarjeta</h1>
       </div>
-      <DepositCardStep/>
+      <Suspense>
+        <DepositCardStep/>
+      </Suspense>
     </>
   );
 };

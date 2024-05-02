@@ -23,6 +23,7 @@ export const ServiceSearch = () => {
     data: recentServices,
     isLoading: isLoadingRecentServices,
     isFetching: isFetchingRecentServices,
+    // @ts-ignore
   } = useGetAllServicesQuery();
 
   const {
