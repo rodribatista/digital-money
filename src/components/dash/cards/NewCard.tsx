@@ -60,22 +60,23 @@ export const NewCard = () => {
       account_id: accountInfo.account_id,
       card_data: cardData,
     };
-    createCard(cardRequest).then(({error}: MutationsApiResponses) => {
-      if (error) {
+    createCard(cardRequest)
+      .then(({error}: MutationsApiResponses) => {
+        if (error) {
+          appToast.fire({
+            icon: "error",
+            title: "Error al registrar tarjeta.",
+            timer: 2000,
+          });
+          return;
+        }
         appToast.fire({
-          icon: "error",
-          title: "Error al registrar tarjeta.",
+          icon: "success",
+          title: "Tarjeta registrada correctamente.",
           timer: 2000,
         });
-        return;
-      }
-      appToast.fire({
-        icon: "success",
-        title: "Tarjeta registrada correctamente.",
-        timer: 2000,
+        router.push("/dashboard/cards")
       });
-      router.push("/dashboard/cards")
-    });
   }
 
   return (

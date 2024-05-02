@@ -15,6 +15,7 @@ const activityApi = baseApi.injectEndpoints({
         method: 'GET',
         headers: {'Authorization': access_token},
       }),
+      providesTags: ['activity']
     }),
     getAccountActivityById: builder.query<Activity, ActivityApi>({
       query: ({access_token, account_id, transaction_id}) => ({

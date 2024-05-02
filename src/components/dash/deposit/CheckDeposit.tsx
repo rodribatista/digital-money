@@ -4,12 +4,17 @@ import Image from "next/image";
 import {useRouter} from "next/navigation";
 import {useEffect} from "react";
 import {skipToken} from "@reduxjs/toolkit/query";
-import {FieldValues, SubmitHandler, useFormContext} from "react-hook-form";
+import {SubmitHandler, useFormContext} from "react-hook-form";
 
 import {useAppSelector} from "@/lib/hooks";
 import {useGetCardByIdQuery} from "@/api/cardApi";
+import {DepositApi, useCreateDepositMutation} from "@/api/depositApi";
 
+import {DepositType} from "@/types/DepositType";
+
+import {appToast} from "@/lib/sweet";
 import {icon} from "@/utils/routes";
+import {MutationsApiResponses} from "@/types/ApiType";
 
 export const CheckDeposit = () => {
 
@@ -22,7 +27,8 @@ export const CheckDeposit = () => {
   } = useFormContext()
 
   const {accessToken, accountInfo} = useAppSelector(state => state.auth);
-  const {data} = useGetCardByIdQuery(accessToken ? {access_token: accessToken, account_id: accountInfo.account_id, card_id: getValues("card_id")}: skipToken)
+  const {data} = useGetCardByIdQuery(accessToken ? {access_token: accessToken, account_id: accountInfo.account_id, card_id: getValues("card_id")}: skipToken);
+  const [createDeposit] = useCreateDepositMutation();
 
   useEffect(() => {
     if (!getValues("card_id")) {
@@ -35,8 +41,31 @@ export const CheckDeposit = () => {
     }
   }, []);
 
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    alert(JSON.stringify(data, null, 2));
+  const onSubmit: SubmitHandler<DepositType> = (data) => {
+    appToast.fire({
+      title: "Realizando transacción...",
+      willOpen() {
+        appToast.showLoading();
+      },
+    });
+    const depositRequest: DepositApi = {
+      access_token: accessToken || "",
+      account_id: accountInfo.account_id,
+      deposit_data: data,
+    };
+    createDeposit(depositRequest)
+      .then(({error}: MutationsApiResponses) => {
+        if (error) {
+          appToast.fire({
+            icon: "error",
+            title: "Error al realizar la transacción.",
+            timer: 2000,
+          });
+          return;
+        }
+        router.push("/dashboard/deposit/card/success")
+        appToast.close();
+      });
   };
 
   const handleConfirm = () => {
