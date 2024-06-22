@@ -6,7 +6,7 @@ export const baseApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://digitalmoney.digitalhouse.com/',
   }),
-  tagTypes: ['cards', 'user', 'activity'],
+  tagTypes: ['cards', 'user', 'activity', 'account'],
   endpoints: () => ({}),
 });
 

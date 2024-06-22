@@ -23,6 +23,7 @@ const userApi = baseApi.injectEndpoints({
         method: 'GET',
         headers: {'Authorization': access_token},
       }),
+      providesTags: ['account'],
     }),
     getUserData: builder.query({
       query: ({access_token, user_id}: UserApi) => ({

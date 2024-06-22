@@ -16,7 +16,7 @@ const depositApi = baseApi.injectEndpoints({
         headers: {'Authorization': access_token},
         body: deposit_data,
       }),
-      invalidatesTags: ['activity'],
+      invalidatesTags: ['activity', 'account'],
     }),
   }),
   overrideExisting: false,
