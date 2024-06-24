@@ -33,6 +33,8 @@ export const SignupForm = () => {
     resolver: yupResolver(schema),
   })
 
+  const {formState: {errors}} = signupForm;
+
   useEffect(() => {
     signupForm.setFocus("firstname")
   }, []);
@@ -66,14 +68,35 @@ export const SignupForm = () => {
       <FormProvider {...signupForm}>
         <form className={"w-full flex flex-col gap-5 md:w-2/3 xl:w-1/2"}>
           <h1 className={"text-2xl text-center"}>Creá tu cuenta</h1>
-          <FormInput type={"text"} name={"firstname"} placeholder={"Nombre*"}/>
-          <FormInput type={"text"} name={"lastname"} placeholder={"Apellido*"}/>
-          <FormInput type={"number"} name={"dni"} placeholder={"DNI*"}/>
-          <FormInput type={"text"} name={"email"} placeholder={"Correo electrónico*"}/>
-          <FormInput type={"password"} name={"password"} placeholder={"********"}/>
-          <span className={"self-center text-sm text-center md:w-3/4"}>Usá entre 6 y 20 carácteres. Debe contener al menos al menos una mayúscula y un número.</span>
-          <FormInput type={"password"} name={"password_confirmation"} placeholder={"********"}/>
-          <FormInput type={"tel"} name={"phone"} placeholder={"Teléfono*"}/>
+          <div className={"flex flex-col gap-2"}>
+            <FormInput type={"text"} name={"firstname"} placeholder={"Nombre*"}/>
+            {errors.firstname && <ErrorMsg msg={"El nombre es requerido"}/>}
+          </div>
+          <div className={"flex flex-col gap-2"}>
+            <FormInput type={"text"} name={"lastname"} placeholder={"Apellido*"}/>
+            {errors.lastname && <ErrorMsg msg={"El apellido es requerido"}/>}
+          </div>
+          <div className={"flex flex-col gap-2"}>
+            <FormInput type={"number"} name={"dni"} placeholder={"DNI*"}/>
+            {errors.dni && <ErrorMsg msg={"Ingrese un DNI válido"}/>}
+          </div>
+          <div className={"flex flex-col gap-2"}>
+            <FormInput type={"text"} name={"email"} placeholder={"Correo electrónico*"}/>
+            {errors.email && <ErrorMsg msg={"Ingrese un correo electrónico válido"}/>}
+          </div>
+          <div className={"flex flex-col gap-2"}>
+            <FormInput type={"password"} name={"password"} placeholder={"********"}/>
+            <span className={"self-center text-sm text-center md:w-3/4"}>Usá entre 6 y 20 carácteres. Debe contener al menos al menos una mayúscula y un número.</span>
+            {errors.password && <ErrorMsg msg={"Ingrese una contraseña válida"}/>}
+          </div>
+          <div className={"flex flex-col gap-2"}>
+            <FormInput type={"password"} name={"password_confirmation"} placeholder={"********"}/>
+            {errors.password_confirmation && <ErrorMsg msg={"Las contraseñas no coinciden"}/>}
+          </div>
+          <div className={"flex flex-col gap-2"}>
+            <FormInput type={"tel"} name={"phone"} placeholder={"Teléfono*"}/>
+            {errors.phone && <ErrorMsg msg={"El teléfono es requerido"}/>}
+          </div>
           <FormButton onSubmit={onSubmit}>Crear cuenta</FormButton>
           <div className={"flex flex-row gap-2 justify-center"}>
             <p className={"text-base"}>
@@ -89,4 +112,10 @@ export const SignupForm = () => {
     </>
   )
 
+};
+
+const ErrorMsg = ({msg}: { msg: string }) => {
+  return (
+    <span className={"text-end text-red-500 text-sm"}>{msg}</span>
+  )
 };
