@@ -7,11 +7,20 @@ import {useGetAllCardsQuery} from "@/api/cardApi";
 import {CardItem} from "@/components/dash/cards/CardItem";
 
 import {CardType} from "@/types/CardType";
+import {useEffect} from "react";
 
-export const CardsList = () => {
+type CardsListProps = {
+  setCardsQty: (qty: number) => void,
+};
+
+export const CardsList = ({setCardsQty}: CardsListProps) => {
 
   const {accessToken, accountInfo} = useAppSelector(state => state.auth);
   const {data, isLoading} = useGetAllCardsQuery(accessToken ? {access_token: accessToken, account_id: accountInfo.account_id}: skipToken);
+
+  useEffect(() => {
+    if(!isLoading) setCardsQty(data.length);
+  }, [isLoading, data]);
 
   return (
     <section className={"w-full p-5 flex flex-col gap-5 rounded-md bg-white text-black shadow-md md:p-10 xl:p-15"}>
