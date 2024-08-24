@@ -1,5 +1,5 @@
 "use client";
-import {useState} from "react";
+import React, {useState} from "react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -11,7 +11,7 @@ export const Cards = () => {
 
   const [cardsQty, setCardsQty] = useState<number>(0);
 
-  const handleNewCard = (event) => {
+  const handleNewCard = (event: { preventDefault: () => void; }) => {
     if(cardsQty >= 10) {
       event.preventDefault();
       appToast.fire({
