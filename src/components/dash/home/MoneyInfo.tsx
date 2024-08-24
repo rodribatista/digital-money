@@ -16,7 +16,7 @@ export const MoneyInfo = () => {
         <h2 className={"text-xl"}>Dinero disponible</h2>
         <span
           className={"w-fit p-5 rounded-full border-2 border-yellow-500 text-4xl font-semibold"}>
-          $ {accountInfo.available_amount},00
+          $ {accountInfo.available_amount.toFixed(2).replace(".",",").replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
         </span>
       </div>
     </section>
