@@ -36,6 +36,16 @@ export const ActivityRender = ({page, perPage, setMaxPage}: ActivityListProps) =
     }
   }, [isLoading, watch("filter")]);
 
+  useEffect(() => {
+    if (!isLoading) {
+      if (getValues("searchValue")?.length >= 3) {
+        const list = ActivityDestinationFilter({data, searchValue: getValues("searchValue")});
+        setActivityList(list);
+        setMaxPage(Math.ceil(list.length / perPage));
+      }
+    }
+  }, [watch("searchValue")]);
+
   return (
     <ul className={"flex flex-col gap-5"}>
       {!isLoading ? (activityList.length ?
@@ -65,4 +75,13 @@ const ActivityDateFilter = ({data, filter}: ActivityDateFilterProps) => {
     default:
       return data;
   }
+};
+
+type ActivityDestinationFilterProps = {
+  data: Activity[],
+  searchValue: string,
+};
+
+const ActivityDestinationFilter = ({data, searchValue}: ActivityDestinationFilterProps) => {
+  return data.filter(activity => activity.destination?.toLowerCase().includes(searchValue.toLowerCase()));
 };
