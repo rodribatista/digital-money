@@ -7,10 +7,12 @@ import * as yup from "yup";
 import {yupResolver} from "@hookform/resolvers/yup";
 
 import {FormSearch} from "@/components/form/FormSearch";
+import {ActivityData} from "@/components/dash/activity/ActivityData";
 import {ActivityRender} from "@/components/dash/activity/ActivityRender";
 import {ActivityPagination} from "@/components/dash/activity/ActivityPagination";
 import {ActivityFilter} from "@/components/dash/activity/ActivityFilter";
-import {skipToken} from "@reduxjs/toolkit/query";
+
+import {Activity} from "@/types/ActivityType";
 
 type FilterType = {
   filter: string,
@@ -49,7 +51,9 @@ export const ActivityList = () => {
             <h2 className={"text-xl font-semibold"}>Tu actividad</h2>
             <ActivityFilter/>
           </div>
-          <ActivityRender page={page} perPage={10} setMaxPage={setMaxPage}/>
+          <ActivityData>
+            {(activity: Activity[]) => (<ActivityRender activity={activity} page={page} perPage={10} setMaxPage={setMaxPage}/>)}
+          </ActivityData>
           <ActivityPagination page={page} setPage={setPage} maxPage={maxPage}/>
         </div>
       </FormProvider>
