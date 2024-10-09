@@ -38,7 +38,7 @@ export const ActivityData = ({children}: ActivityDataProps) => {
       });
       setActivity(data_processed);
     }
-  }, []);
+  }, [isLoading]);
 
   return (
     <>
